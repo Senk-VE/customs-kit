@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>XML → PDF / ZIP</title>
-    <link rel="stylesheet" href="./style.css?v=2026.02.01" />
+    <link rel="stylesheet" href="./style.css?v=2026.02.05" />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap"
       rel="stylesheet"
@@ -35,7 +35,7 @@
         <div class="toggle-bar toggle-bar-bottom"></div>
       </div>
     </header>
-    <script src="toggle.js?v=2026.02.01"></script>
+    <script src="toggle.js?v=2026.02.05"></script>
 
     <div class="container_02">
       <h1>Выберите файл-XML для извлечения:</h1>
@@ -49,7 +49,43 @@
 
     <div id="resultXml"></div>
 
-    <script src="base64-converter.js?v=2026.02.01"></script>
+    <!-- ===== Modal: XML package preview ===== -->
+    <div id="xmlModalOverlay" class="modal-overlay">
+      <div class="modal-window" role="dialog" aria-modal="true">
+        <div class="modal-header">
+          <div>
+            <div id="modalRegNumber" class="modal-title"></div>
+            <div id="modalSender" class="modal-subtitle"></div>
+            <div id="modalSummary" class="modal-summary"></div>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="files-table-wrapper">
+            <table class="files-table">
+              <thead>
+                <tr>
+                  <th>№</th>
+                  <th>Имя PDF</th>
+                  <th>Размер</th>
+                  <th>Номер документа</th>
+                  <th>Дата</th>
+                  <th>Док / №</th>
+                </tr>
+              </thead>
+              <tbody id="modalFilesBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button id="modalDownloadBtn">Скачать ZIP</button>
+          <button id="modalCloseFooterBtn">Закрыть</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="base64-converter.js?v=2026.02.05"></script>
     <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   </body>
 </html>

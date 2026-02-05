@@ -1,3 +1,6 @@
+let currentPreviewZip = null;
+let currentPreviewRegNumber = null;
+
 document.addEventListener('DOMContentLoaded', () => {
   const input = document.getElementById('xmlInput');
   const parseBtn = document.getElementById('parseBtn');
@@ -99,6 +102,37 @@ async function extractPdfFromXml(xmlText) {
   const regNumber = sanitizeName(regNumberRaw);
   const documents = xmlDoc.getElementsByTagName('Document');
 
+  const filesMeta = [];
+  let totalSizeMb = 0;
+
+  for (let i = 0; i < documents.length; i++) {
+    const d = documents[i];
+
+    const size = parseFloat(
+      d.getElementsByTagName('Size')[0]?.textContent || '0',
+    );
+
+    totalSizeMb += size;
+
+    filesMeta.push({
+      index: i + 1,
+      fileName: d.getElementsByTagName('Name')[0]?.textContent || '—',
+      sizeMb: size,
+      docNumber: d.getElementsByTagName('DocNumber')[0]?.textContent || '—',
+      docDate: d.getElementsByTagName('DocDate')[0]?.textContent || '—',
+      docCode: d.getElementsByTagName('DocCode')[0]?.textContent || '—',
+      docType: d.getElementsByTagName('DocType')[0]?.textContent || '—',
+    });
+  }
+
+  const packageMeta = {
+    regNumber,
+    senderName,
+    totalFiles: filesMeta.length,
+    totalSizeMb,
+    files: filesMeta,
+  };
+
   const zip = new JSZip();
   const usedNames = new Set();
 
@@ -130,7 +164,7 @@ async function extractPdfFromXml(xmlText) {
     }
   }
 
-  return { zip, regNumber, senderName };
+  return { zip, regNumber, senderName, packageMeta };
 }
 
 /* ================== attach XML (with progress) ================== */
@@ -153,7 +187,8 @@ async function extractFileFromXmlWithProgress() {
     );
 
     const xmlText = await input.files[i].text();
-    const { zip, regNumber, senderName } = await extractPdfFromXml(xmlText);
+    const { zip, regNumber, senderName, packageMeta } =
+      await extractPdfFromXml(xmlText);
 
     const block = document.createElement('div');
     block.innerHTML = `
@@ -161,9 +196,15 @@ async function extractFileFromXmlWithProgress() {
         ${regNumber}<br>
         ${senderName}<br>
         <img src="download.png" alt="скачать" class="icon-btn">
-        <img src="zoom.png" alt="просмотр" class="icon-btn">
+        <img src="zoom.png" alt="просмотр" class="icon-btn icon-preview">
       </p>
     `;
+    block.querySelector('.icon-preview').addEventListener('click', () => {
+      currentPreviewZip = zip;
+      currentPreviewRegNumber = regNumber;
+
+      openPreviewModal(packageMeta);
+    });
 
     block
       .querySelector('img[alt="скачать"]')
@@ -253,3 +294,58 @@ async function saveZipCrossBrowser(blob, fileName) {
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
+
+function openPreviewModal(meta) {
+  const overlay = document.getElementById('xmlModalOverlay');
+  const body = document.getElementById('modalFilesBody');
+
+  document.getElementById('modalRegNumber').textContent = meta.regNumber;
+  document.getElementById('modalSender').textContent = meta.senderName;
+  document.getElementById('modalSummary').textContent =
+    `Файлов: ${meta.totalFiles} · Общий размер: ${meta.totalSizeMb.toFixed(
+      2,
+    )} MB`;
+
+  body.innerHTML = '';
+
+  meta.files.forEach((f) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${f.index}</td>
+      <td>${f.fileName}</td>
+      <td>${f.sizeMb ? f.sizeMb.toFixed(2) + ' MB' : '—'}</td>
+      <td>${f.docNumber}</td>
+      <td>${f.docDate}</td>
+      <td>${f.docCode} / ${f.docType}</td>
+    `;
+    body.appendChild(tr);
+  });
+
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePreviewModal() {
+  const overlay = document.getElementById('xmlModalOverlay');
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+const closeBtn = document.getElementById('modalCloseBtn');
+if (closeBtn) closeBtn.onclick = closePreviewModal;
+
+document.getElementById('modalCloseFooterBtn').onclick = closePreviewModal;
+
+document.getElementById('xmlModalOverlay').addEventListener('click', (e) => {
+  if (e.target.id === 'xmlModalOverlay') closePreviewModal();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closePreviewModal();
+});
+document.getElementById('modalDownloadBtn').onclick = async () => {
+  if (!currentPreviewZip) return;
+
+  const blob = await currentPreviewZip.generateAsync({ type: 'blob' });
+  await saveZipCrossBrowser(blob, `${currentPreviewRegNumber}.zip`);
+};
