@@ -1,42 +1,52 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Stat Helper</title>
-    <link rel="stylesheet" href="./style.css?v=2026.02.01" />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet"/>
-    <link rel="icon" type="image/x-icon" href="./favicon/favicon.ico">
-    </head>
+    <title>Customs Kit | Customs Declaration Tools</title>
+
+    <link rel="stylesheet" href="/src/styles/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
+  </head>
 
   <body>
     <header class="nav-container">
-      <div class="nav-item nav-item-logo"><a href="index.html">stat&#128161helper</a></div>
-        <div class="nav-item nav-item-menu" id="nav-menu">
-          <ul>
-            <li><a href="calc.html">Расчет срока ИМ СД</a></li>
-            <li><a href="currency.html">Конвертор валют СД</a></li>
-            <li><a href="base64-converter.html">Извлечь файлы из XML</a></li>
-            <li><a href="about.html">О приложении</a></li>
+      <div class="nav-item nav-item-logo">
+        <a href="index.html">Customs⚙️Kit</a>
+      </div>
+
+      <div class="nav-item nav-item-menu" id="nav-menu">
+        <ul>
+          <li><a href="calc.html">Расчет срока ИМ СД</a></li>
+          <li><a href="currency.html">Конвертор валют СД</a></li>
+          <li><a href="base64-converter.html">Извлечь файлы из XML</a></li>
+          <li><a href="about.html">О приложении</a></li>
         </ul>
-        </div>
-        <div class="nav-item nav-item-toggle" id="nav-toggle" >
-          <div class="toggle-bar toggle-bar-top"></div>
-          <div class="toggle-bar toggle-bar-middle"></div>
-          <div class="toggle-bar toggle-bar-bottom"></div>
-        </div>
-        
+      </div>
+
+      <div class="nav-item nav-item-toggle" id="nav-toggle">
+        <div class="toggle-bar toggle-bar-top"></div>
+        <div class="toggle-bar toggle-bar-middle"></div>
+        <div class="toggle-bar toggle-bar-bottom"></div>
+      </div>
     </header>
-    <script src="toggle.js?v=2026.02.01"></script>
+
+    <script type="module" src="/src/js/core/toggle.js"></script>
 
     <div class="container_01">
       <h1>Для начала работы с приложением выберите один из разделов.</h1>
-    <p><a href="calc.html">Расчет срока ИМ СД</p>
-    <p><a href="currency.html">Конвертор валют СД</p>
-      <p><a href="base64-converter.html">Извлечь файлы из XML</p>
-    </div>
 
-    <script src="script_currency.js?v=2026.02.01"></script>
+      <p><a href="calc.html">Расчет срока ИМ СД</a></p>
+      <p><a href="currency.html">Конвертор валют СД</a></p>
+      <p><a href="base64-converter.html">Извлечь файлы из XML</a></p>
+    </div>
   </body>
 </html>

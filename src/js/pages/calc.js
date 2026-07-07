@@ -61,59 +61,54 @@ const shiftedWorkdays = [
 ];
 
 const isWeekend = (date) => {
-  const dayOfWeek = date.getDay(); // 0 = Sunday, 6 = Saturday
+  const dayOfWeek = date.getDay();
   const isoDate = date.toISOString().split('T')[0];
 
-  // День считается выходным, если это суббота, воскресенье или праздник (но не перенесённый рабочий день)
   return (
     (dayOfWeek === 0 || dayOfWeek === 6 || weekends.includes(isoDate)) &&
-    !shiftedWorkdays.includes(isoDate) // Исключение для перенесённых рабочих дней
+    !shiftedWorkdays.includes(isoDate)
   );
-};
-
-const isShiftedWorkday = (date) => {
-  const isoDate = date.toISOString().split('T')[0];
-  return shiftedWorkdays.includes(isoDate);
 };
 
 const getDeadline = (startDate) => {
   let date = new Date(startDate);
   let workdayCount = 0;
 
-  // Ищем 7-й рабочий день
   while (workdayCount < 7) {
-    date.setDate(date.getDate() + 1); // Переход на следующий день
+    date.setDate(date.getDate() + 1);
     if (!isWeekend(date)) {
-      workdayCount++; // Увеличиваем счётчик рабочих дней
+      workdayCount++;
     }
   }
 
   return date;
 };
 
+// ✔ FIX: защита от null + Vite загрузки
 const displayDate = () => {
-  const dateInput = document.getElementById('dateInput').value;
+  const dateInputEl = document.getElementById('dateInput');
   const result = document.getElementById('result');
 
-  if (dateInput) {
-    // Создаем объект Date из выбранной даты
-    const date = new Date(dateInput);
-    // Получаем месяц (0 - январь, 1 - февраль, и т.д.)
-    const monthIndex = date.getMonth();
-    // Получаем сокращенное название месяца
-    const monthAbbr = monthAbbreviations[monthIndex];
-    // Форматируем результат
-    result.textContent = `Выбранная дата: ${date.getDate()} ${monthAbbr} ${date.getFullYear()}`;
+  if (!dateInputEl || !result) return;
 
-    // Находим крайний срок
+  const dateInput = dateInputEl.value;
+
+  if (dateInput) {
+    const date = new Date(dateInput);
+
+    const monthIndex = date.getMonth();
+    const monthAbbr = monthAbbreviations[monthIndex];
+
     const deadline = getDeadline(date);
     const deadlineMonthAbbr = monthAbbreviations[deadline.getMonth()];
-    const deadlineFormatted = `${deadline.getDate()} ${deadlineMonthAbbr} ${deadline.getFullYear()}`;
 
-    // Добавляем "крайний срок"
-    result.innerHTML = `Выбранная дата: ${date.getDate()} ${monthAbbr} ${date.getFullYear()}<br>`;
-    result.innerHTML += `Срок подачи: ${deadlineFormatted}`;
+    result.innerHTML =
+      `Выбранная дата: ${date.getDate()} ${monthAbbr} ${date.getFullYear()}<br>` +
+      `Срок подачи: ${deadline.getDate()} ${deadlineMonthAbbr} ${deadline.getFullYear()}`;
   } else {
     result.textContent = 'Дата не выбрана';
   }
 };
+
+// ✔ FIX: чтобы работало через onclick в HTML
+window.displayDate = displayDate;

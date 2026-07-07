@@ -1,38 +1,47 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>calcStat</title>
-    <link rel="stylesheet" href="./style.css?v=2026.02.01" />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet"/>
-    <link rel="icon" type="image/x-icon" href="./favicon/favicon.ico">
+    <title>Customs Kit | Currency Calculator</title>
 
+    <link rel="stylesheet" href="/src/styles/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
   </head>
 
   <body>
     <header class="nav-container">
-      <div class="nav-item nav-item-logo"><a href="index.html">stat&#128161helper</a></div>
-        <div class="nav-item nav-item-menu" id="nav-menu">
-          <ul>
-            <li><a href="calc.html">Расчет срока ИМ СД</a></li>
+      <div class="nav-item nav-item-logo">
+        <a href="index.html">Customs⚙️Kit</a>
+      </div>
+
+      <div class="nav-item nav-item-menu" id="nav-menu">
+        <ul>
+          <li><a href="calc.html">Расчет срока ИМ СД</a></li>
           <li><a href="currency.html">Конвертор валют СД</a></li>
           <li><a href="base64-converter.html">Извлечь файлы из XML</a></li>
           <li><a href="about.html">О приложении</a></li>
         </ul>
-        </div>
-        <div class="nav-item nav-item-toggle" id="nav-toggle" >
-          <div class="toggle-bar toggle-bar-top"></div>
-          <div class="toggle-bar toggle-bar-middle"></div>
-          <div class="toggle-bar toggle-bar-bottom"></div>
-        </div>
-        
+      </div>
+
+      <div class="nav-item nav-item-toggle" id="nav-toggle">
+        <div class="toggle-bar"></div>
+        <div class="toggle-bar"></div>
+        <div class="toggle-bar"></div>
+      </div>
     </header>
-    <script src="toggle.js?v=2026.02.01"></script>
 
     <div class="container_02">
       <h1>Выберите дату курса валют:</h1>
+
       <input type="date" id="dateInputConverter" min="2016-07-01" />
       <input type="text" id="amount" placeholder="Введите сумму" />
 
@@ -42,15 +51,17 @@
         <option value="RUR">RUR (643)</option>
         <option value="BYN">BYN (933)</option>
       </select>
+
       <div class="button-container">
         <button id="addButton">Добавить</button>
         <button id="clearButton">Очистить</button>
         <button id="doneButton">✔️</button>
       </div>
+
       <div id="resultContainer"></div>
     </div>
 
-    <script src="script_currency.js?v=2026.02.01"></script>
-
+    <script type="module" src="/src/js/core/toggle.js"></script>
+    <script type="module" src="/src/js/api/currency.js"></script>
   </body>
 </html>

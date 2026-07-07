@@ -4,19 +4,23 @@
  #889bbf Синий серо-голубой  
  #bfb488 Бежевый цвет  
  */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   display: flex; /* Включаем Flexbox */
   justify-content: flex-start; /* Выравниваем содержимое по горизонтали */
   align-items: center; /* Выравниваем содержимое по вертикали */
   flex-direction: column; /* Располагаем контейнеры в колонку */
-  height: 100vh; /* Используем всю высоту окна браузера */
-  margin: 0;
-  padding: 0;
+  min-height: 100vh; /* Используем всю высоту окна браузера */
   color: #f9c127; /* Ярко-желтый текст */
-  overflow-x: hidden;
 }
-body,
-html {
+html,
+body {
   margin: 0;
   padding: 0;
   overflow-x: hidden; /* Отключить горизонтальную прокрутку */
@@ -29,11 +33,13 @@ html {
   align-items: center;
   position: fixed;
   top: 0;
-  padding: 0px 0px;
+  padding: 0;
   width: 100%;
   z-index: 999;
   background: rgba(0, 0, 0, 0.8);
-  transition: all 0.4s ease-in-out;
+  transition:
+    background-color 0.4s ease,
+    box-shadow 0.4s ease;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   padding-right: 30px;
   height: 54px;
@@ -51,12 +57,13 @@ html {
   will-change: transform;
 }
 .nav-item-logo a:hover {
-  display: inline-block;
   transform: scale(1.05);
 }
 .nav-item-menu ul {
   display: flex;
-  gap: 50px;
+  gap: 35px;
+  padding: 0;
+  margin: 0;
 }
 
 .nav-item-menu ul li {
@@ -70,6 +77,7 @@ html {
   text-transform: uppercase;
   position: relative;
   letter-spacing: 1px;
+  white-space: nowrap;
 }
 .nav-item-menu a::after {
   content: '';
@@ -190,7 +198,7 @@ h1 {
   padding: 30px;
   border-radius: 8px;
   width: 70%;
-  max-width: 75%;
+  max-width: 90%;
 }
 .container_03 p {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -245,9 +253,7 @@ input[type='date'] {
 }
 
 /* Стили для всех кнопок "Добавить", "Очистить", "Подтвердить", чтобы они стали идентичными */
-button,
-#addButton,
-#clearButton {
+button {
   padding: 3px 15px; /* Используем одинаковые отступы для всех кнопок */
   font-size: 20px; /* Используем одинаковый размер шрифта */
   font-weight: 500; /* Используем одинаковый стиль шрифта */
@@ -278,7 +284,7 @@ button:hover,
   font-size: 1.2rem;
   font-weight: bold;
   color: #1e3a5f;
-  margin-top: 10px;
+  margin-top: 15px;
   background-color: #e4edf8;
   padding: 0.2rem;
   border-radius: 8px;
@@ -290,7 +296,7 @@ button:hover,
 .total-byn {
   font-size: 1.2rem;
   font-weight: bold;
-  margin-top: 0.1rem;
+  margin-top: 15px;
   padding: 0.2rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -305,8 +311,8 @@ button:hover,
   background-color: rgba(181, 220, 151, 0.5);
   color: #4a5d3b; /* Темно-зеленый цвет для текста, чтобы создать контраст */
 }
-/* Media Query for Mobile */
-@media (max-width: 1032px) {
+/* Responsive navigation */
+@media (max-width: 1300px) {
   .nav-item-menu {
     display: none;
   }
@@ -377,21 +383,17 @@ button:hover,
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 8px;
+  padding: 0.8rem;
+  margin: 0.1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: rgba(250, 242, 214, 0.5);
-  font-family: 'times New Roman', sans-serif
-  font-size: 1 rem;
+  font-family: 'Times New Roman', serif;
+  font-size: 1rem;
   font-weight: bold;
-  margin: 0.1rem;
-  padding: 0.8rem;
-  border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background-color: rgba(250, 242, 214, 0.5);
   color: #2a3d3f;
 }
-
 .icon-btn {
   width: 1.5rem;
   height: 1.5rem;
@@ -409,9 +411,9 @@ button:hover,
 }
 
 #parseBtn {
-  display: none; 
-  margin: 20px auto 0 auto; 
-  display: block; 
+  display: none;
+  margin: 20px auto 0 auto;
+  display: block;
   padding: 3px 15px;
   font-size: 20px;
   font-weight: 500;
@@ -422,7 +424,9 @@ button:hover,
   line-height: 1.5;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
 }
 
 #parseBtn:hover {
@@ -435,7 +439,7 @@ button:hover,
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
-  display: none;               /* 🔥 важно */
+  display: none; /* 🔥 важно */
   align-items: center;
   justify-content: center;
   z-index: 1000;
@@ -535,6 +539,18 @@ button:hover,
   justify-content: space-around;
 }
 
+.drag-over {
+  outline: 2px dashed #f9c127;
+  background: rgba(249, 193, 39, 0.08);
+}
 
+.actions-row {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
 
-
+.hidden-btn {
+  display: none;
+}

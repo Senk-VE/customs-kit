@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>XML → PDF / ZIP</title>
-    <link rel="stylesheet" href="./style.css?v=2026.02.05" />
+    <title>Customs Kit | XML to PDF / ZIP</title>
+
+    <link rel="stylesheet" href="/src/styles/style.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap"
       rel="stylesheet"
@@ -13,14 +14,15 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="icon" type="image/x-icon" href="./favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
   </head>
 
   <body>
     <header class="nav-container">
       <div class="nav-item nav-item-logo">
-        <a href="index.html">stat💡helper</a>
+        <a href="index.html">Customs⚙️Kit</a>
       </div>
+
       <div class="nav-item nav-item-menu" id="nav-menu">
         <ul>
           <li><a href="calc.html">Расчет срока ИМ СД</a></li>
@@ -29,29 +31,29 @@
           <li><a href="about.html">О приложении</a></li>
         </ul>
       </div>
+
       <div class="nav-item nav-item-toggle" id="nav-toggle">
         <div class="toggle-bar toggle-bar-top"></div>
         <div class="toggle-bar toggle-bar-middle"></div>
         <div class="toggle-bar toggle-bar-bottom"></div>
       </div>
     </header>
-    <script src="toggle.js?v=2026.02.05"></script>
 
     <div class="container_02">
-      <h1>Выберите файл-XML для извлечения:</h1>
-      <form id="xmlForm">
-        <label>
-          <input type="file" id="xmlInput" accept=".xml" multiple />
-        </label>
-        <button type="button" id="parseBtn">скачать все</button>
-      </form>
+      <h1>Выберите XML</h1>
+
+      <input type="file" id="xmlInput" accept=".xml" multiple />
+      <div>
+        <button id="parseBtn" class="hidden-btn">Скачать все</button>
+        <button id="clearBtn" class="hidden-btn">Очистить</button>
+      </div>
     </div>
 
     <div id="resultXml"></div>
 
-    <!-- ===== Modal: XML package preview ===== -->
+    <!-- MODAL -->
     <div id="xmlModalOverlay" class="modal-overlay">
-      <div class="modal-window" role="dialog" aria-modal="true">
+      <div class="modal-window">
         <div class="modal-header">
           <div>
             <div id="modalRegNumber" class="modal-title"></div>
@@ -61,21 +63,19 @@
         </div>
 
         <div class="modal-body">
-          <div class="files-table-wrapper">
-            <table class="files-table">
-              <thead>
-                <tr>
-                  <th>№</th>
-                  <th>Имя PDF</th>
-                  <th>Размер</th>
-                  <th>Номер документа</th>
-                  <th>Дата</th>
-                  <th>Док / №</th>
-                </tr>
-              </thead>
-              <tbody id="modalFilesBody"></tbody>
-            </table>
-          </div>
+          <table class="files-table">
+            <thead>
+              <tr>
+                <th>№</th>
+                <th>Имя PDF</th>
+                <th>Размер</th>
+                <th>Док</th>
+                <th>Дата</th>
+                <th>Код</th>
+              </tr>
+            </thead>
+            <tbody id="modalFilesBody"></tbody>
+          </table>
         </div>
 
         <div class="modal-footer">
@@ -85,7 +85,9 @@
       </div>
     </div>
 
-    <script src="base64-converter.js?v=2026.02.05"></script>
     <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+
+    <script type="module" src="/src/js/core/toggle.js"></script>
+    <script type="module" src="/src/js/pages/base64.js"></script>
   </body>
 </html>
