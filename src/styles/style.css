@@ -232,26 +232,55 @@ input[type='date'] {
 #amount,
 #currencySelect {
   display: inline-block;
-  padding: 3%;
+  height: 46px;
+  padding: 12px;
   font-size: 16px;
   border: 1px solid #889bbf;
   border-radius: 6px;
+  box-sizing: border-box;
 }
+
 #amount {
-  width: 50%;
+  width: 55%;
 }
+
 #currencySelect {
-  width: 35%;
+  width: 37.8%;
 }
 
 /* Выравниваем кнопки */
 .button-container {
   display: flex;
   justify-content: center;
-  gap: 20px; /* Расстояние между кнопками */
-  margin-top: 10px;
+  gap: 12px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+  padding: 28px 0 18px 0;
 }
 
+.button-container button {
+  flex: 1 1 120px;
+  min-height: 42px;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: #f9c127;
+  color: #262f40;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.button-container button:hover {
+  background-color: #bfb488;
+}
+
+@media (max-width: 400px) {
+  .button-container button {
+    flex: 1 1 100%;
+  }
+}
 /* Стили для всех кнопок "Добавить", "Очистить", "Подтвердить", чтобы они стали идентичными */
 button {
   padding: 3px 15px; /* Используем одинаковые отступы для всех кнопок */
@@ -271,7 +300,6 @@ button:hover,
   background-color: #bfb488; /* Бежевый фон при наведении */
   cursor: pointer;
 }
-
 #resultContainer {
   padding-top: 1rem;
   font-size: 16px;
@@ -310,6 +338,11 @@ button:hover,
 .total-byn {
   background-color: rgba(181, 220, 151, 0.5);
   color: #4a5d3b; /* Темно-зеленый цвет для текста, чтобы создать контраст */
+}
+
+#doneButton {
+  background-color: #262f40;
+  color: #f9c127;
 }
 /* Responsive navigation */
 @media (max-width: 1300px) {
@@ -382,7 +415,9 @@ button:hover,
 .xml-output {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 30px;
+  width: 100%;
+  justify-content: space-between;
   padding: 0.8rem;
   margin: 0.1rem;
   border: 1px solid #ccc;
@@ -394,12 +429,48 @@ button:hover,
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   color: #2a3d3f;
 }
+
+.file-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #f9c127;
+  color: #262f40;
+  font-size: 18px;
+  font-weight: 500;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: 0.2s;
+}
+
+.file-button:hover {
+  background-color: #bfb488;
+}
+
 .icon-btn {
   width: 1.5rem;
   height: 1.5rem;
   cursor: pointer;
   transition: transform 0.3s ease-out;
   will-change: transform;
+}
+
+.xml-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.desktop-hint {
+  color: #889bbf;
+  font-size: 15px;
+  margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+  .desktop-hint {
+    display: none;
+  }
 }
 
 .icon-btn:hover {

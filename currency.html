@@ -51,8 +51,12 @@
       <h1>Выберите дату курса валют:</h1>
 
       <input type="date" id="dateInputConverter" min="2016-07-01" />
-      <input type="text" id="amount" placeholder="Введите сумму" />
-
+      <input
+        type="number"
+        id="amount"
+        placeholder="Введите сумму"
+        inputmode="numeric"
+      />
       <select id="currencySelect">
         <option value="USD">USD (840)</option>
         <option value="EUR">EUR (978)</option>
@@ -63,7 +67,7 @@
       <div class="button-container">
         <button id="addButton">Добавить</button>
         <button id="clearButton">Очистить</button>
-        <button id="doneButton">✔️</button>
+        <button id="doneButton">Рассчитать</button>
       </div>
 
       <div id="resultContainer"></div>

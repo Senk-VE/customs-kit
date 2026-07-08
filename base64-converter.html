@@ -50,13 +50,17 @@
     <div class="container_02">
       <h1>Выберите XML</h1>
 
-      <input type="file" id="xmlInput" accept=".xml" multiple />
+      <p class="desktop-hint">Или перетащите XML-файлы сюда</p>
+
+      <input type="file" id="xmlInput" multiple hidden />
+
+      <label for="xmlInput" class="file-button"> 📂 Выбрать XML-файлы </label>
+
       <div>
         <button id="parseBtn" class="hidden-btn">Скачать все</button>
         <button id="clearBtn" class="hidden-btn">Очистить</button>
       </div>
     </div>
-
     <div id="resultXml"></div>
 
     <!-- MODAL -->
