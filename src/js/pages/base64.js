@@ -278,11 +278,11 @@ async function extractFileFromXmlWithProgress() {
 
   <div class="xml-actions">
     <span class="icon-wrapper" title="Скачать">
-      <img src="download.png" class="icon-btn icon-download">
+      <img src="/customs-kit/download.png" class="icon-btn icon-download">
     </span>
 
     <span class="icon-wrapper" title="Просмотр">
-      <img src="zoom.png" class="icon-btn icon-preview">
+      <img src="/customs-kit/zoom.png" class="icon-btn icon-preview">
     </span>
   </div>
 
