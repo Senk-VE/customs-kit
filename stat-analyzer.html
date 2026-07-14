@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Customs Kit | SD XML Data Control</title>
+
+    <link rel="stylesheet" href="./src/styles/style.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/customs-kit/favicon/favicon.ico"
+    />
+  </head>
+
+  <body>
+    <!-- NAVBAR -->
+
+    <div id="navbar"></div>
+
+    <!-- UPLOAD AREA -->
+
+    <div class="container_02">
+      <h1>Контроль данных СД XML</h1>
+      <p class="desktop-hint">
+        Выберите или перетащите XML статистической декларации
+      </p>
+      <input type="file" id="xmlInput" accept=".xml" multiple hidden />
+      <div class="button-container">
+        <label for="xmlInput" class="file-button">📂 Выбрать XML-файлы</label>
+        <button
+          id="exportAllExcelBtn"
+          class="export-btn"
+          type="button"
+          style="display: none"
+        >
+          📂Скачать все в общий excel
+        </button>
+        <button
+          id="clearBtn"
+          class="hidden-btn"
+          type="button"
+          style="display: none"
+        >
+          Очистить
+        </button>
+      </div>
+      <div id="progressWrapper" style="display: none">
+        <div id="progressText"></div>
+        <div class="progress-line">
+          <div id="progressBar"></div>
+        </div>
+      </div>
+    </div>
+    <!-- RESULT -->
+
+    <div id="resultXml"></div>
+
+    <!-- MODAL -->
+
+    <div id="xmlModalOverlay" class="modal-overlay">
+      <div class="modal-window">
+        <div class="modal-header">
+          <div>
+            <div id="modalCompany" class="modal-title"></div>
+
+            <div id="modalGoodsCount" class="modal-subtitle"></div>
+
+            <div id="modalSummary" class="modal-summary"></div>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <table class="files-table">
+            <thead id="modalGoodsHead">
+              <tr>
+                <th>№</th>
+                <th>Наименование</th>
+                <th>Нетто/ед.</th>
+                <th>Факт./нетто</th>
+                <th>Стат./нетто</th>
+              </tr>
+            </thead>
+            <tbody id="modalGoodsBody"></tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button id="modalDownloadBtn" type="button">Скачать</button>
+          <button id="modalCloseFooterBtn" type="button">Закрыть</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- APP -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <script type="module" src="./src/main.js"></script>
+    <script type="module" src="./src/js/pages/statAnalyzer.js"></script>
+  </body>
+</html>

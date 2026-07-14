@@ -1,6 +1,5 @@
-import './styles/style.css';
-import './js/core/toggle.js';
+import { loadNavbar } from './js/modules/navbar.js';
 
-document.querySelector('#app').innerHTML = `
-  <h1>Главная страница</h1>
-`;
+import './styles/style.css';
+
+loadNavbar();

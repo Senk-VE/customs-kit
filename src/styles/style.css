@@ -18,7 +18,9 @@ body {
   flex-direction: column; /* Располагаем контейнеры в колонку */
   min-height: 100vh; /* Используем всю высоту окна браузера */
   color: #f9c127; /* Ярко-желтый текст */
+  font-family: 'Inter', Arial, sans-serif;
 }
+
 html,
 body {
   margin: 0;
@@ -27,7 +29,6 @@ body {
 }
 
 .nav-container {
-  font-family: 'Verdana', sans-serif;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -47,7 +48,6 @@ body {
 .nav-item-logo a {
   display: inline-block;
   color: #f9c127;
-  font-family: 'Montserrat', sans-serif;
   font-size: 18px;
   text-decoration: none;
   text-transform: uppercase;
@@ -55,6 +55,7 @@ body {
   padding: 10px 40px;
   transition: transform 0.3s ease-out;
   will-change: transform;
+  font-family: Montserrat, sans-serif;
 }
 .nav-item-logo a:hover {
   transform: scale(1.05);
@@ -72,7 +73,7 @@ body {
 .nav-item-menu a {
   color: #ffffff;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 500;
   text-transform: uppercase;
   position: relative;
@@ -146,13 +147,11 @@ h1 {
   /* height: 150px; */
 }
 .container_01 p {
-  font-family: 'Verdana', sans-serif;
   font-size: 18px;
   margin-bottom: 15px;
   color: #262f40;
-  font-weight: 900;
+  font-weight: 500;
 }
-
 .container_01 a {
   color: #ebb01a;
   text-decoration: none;
@@ -185,12 +184,12 @@ h1 {
 }
 .container_01 h1,
 .container_02 h1 {
-  color: #262f40; /* Темно-синий заголовок */
+  color: #262f40;
   font-size: 24px;
   margin-bottom: 20px;
-  font-weight: 500;
-  width: 100%;
+  font-weight: 600;
 }
+
 .container_03 {
   background-color: rgba(0, 0, 0, 0.8);
   color: #fff;
@@ -201,7 +200,6 @@ h1 {
   max-width: 90%;
 }
 .container_03 p {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   text-align: justify;
   font-size: 16px;
   font-weight: 600;
@@ -222,11 +220,10 @@ input[type='date'] {
 }
 
 .result {
-  margin-top: 17px;
+  margin-top: 20px;
   font-size: 16px;
-  font-family: Arial, sans-serif;
-  font-weight: 700;
-  color: #262f40; /* Темно-синий цвет текста результата */
+  font-weight: 600;
+  color: #262f40;
 }
 
 #amount,
@@ -252,14 +249,13 @@ input[type='date'] {
 .button-container {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 12px;
-  margin-top: 12px;
+  margin-top: 16px;
   flex-wrap: wrap;
-  padding: 28px 0 18px 0;
 }
-
 .button-container button {
-  flex: 1 1 120px;
+  flex: 0 0 auto;
   min-height: 42px;
   padding: 8px 16px;
   font-size: 16px;
@@ -280,6 +276,21 @@ input[type='date'] {
   .button-container button {
     flex: 1 1 100%;
   }
+}
+.button-container .file-button,
+.button-container button {
+  min-width: 280px;
+  height: 44px;
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
 }
 /* Стили для всех кнопок "Добавить", "Очистить", "Подтвердить", чтобы они стали идентичными */
 button {
@@ -303,7 +314,6 @@ button:hover,
 #resultContainer {
   padding-top: 1rem;
   font-size: 16px;
-  font-family: Arial, sans-serif;
   color: #888888;
 }
 
@@ -374,7 +384,7 @@ button:hover,
 
   .nav-item-menu a {
     padding: 10px 0;
-    font-size: 20px;
+    font-size: 16px;
     letter-spacing: 2px;
     text-decoration: none;
     position: relative;
@@ -423,11 +433,28 @@ button:hover,
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: rgba(250, 242, 214, 0.5);
-  font-family: 'Times New Roman', serif;
   font-size: 1rem;
   font-weight: bold;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   color: #2a3d3f;
+}
+
+.xml-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.xml-reg {
+  font-size: 16px;
+  font-weight: 600;
+  color: #262f40;
+}
+
+.xml-sender {
+  font-size: 16px;
+  color: #555;
 }
 
 .file-button {
@@ -481,25 +508,6 @@ button:hover,
   transform: scale(0.95);
 }
 
-#parseBtn {
-  display: none;
-  margin: 20px auto 0 auto;
-  display: block;
-  padding: 3px 15px;
-  font-size: 20px;
-  font-weight: 500;
-  background-color: #f9c127;
-  color: #262f40;
-  border-radius: 10px;
-  border: none;
-  line-height: 1.5;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition:
-    background-color 0.3s ease,
-    transform 0.3s ease;
-}
-
 #parseBtn:hover {
   background-color: #bfb488;
 }
@@ -524,13 +532,12 @@ button:hover,
   background: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  max-width: 800px;
-  width: 95%;
-  max-height: 80vh;
+  width: 95vw;
+  max-width: 1400px;
+  max-height: 90vh;
   display: flex;
   flex-direction: column;
 }
-
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -624,4 +631,8 @@ button:hover,
 
 .hidden-btn {
   display: none;
+}
+
+#navbar {
+  width: 100%;
 }
