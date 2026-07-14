@@ -11,6 +11,7 @@ export default defineConfig({
         currency: resolve(__dirname, 'currency.html'),
         base64: resolve(__dirname, 'base64-converter.html'),
         about: resolve(__dirname, 'about.html'),
+        statAnalyzer: resolve(__dirname, 'stat-analyzer.html'),
       },
     },
   },
