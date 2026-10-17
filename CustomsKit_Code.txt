@@ -1,0 +1,4134 @@
+================================================
+Customs Kit - Source Code Export
+================================================
+
+
+==================================================
+FILE: package.json
+==================================================
+{
+  "name": "stat-declar-calc",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.3",
+    "vite": "^8.1.1"
+  },
+  "dependencies": {
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "react-router-dom": "^7.18.1"
+  }
+}
+
+
+==================================================
+FILE: vite.config.ts
+==================================================
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { resolve } from 'path';
+
+export default defineConfig({
+  plugins: [react()],
+  base: '/customs-kit/',
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        calc: resolve(__dirname, 'calc.html'),
+        currency: resolve(__dirname, 'currency.html'),
+        base64: resolve(__dirname, 'base64-converter.html'),
+        about: resolve(__dirname, 'about.html'),
+        statAnalyzer: resolve(__dirname, 'stat-analyzer.html'),
+      },
+    },
+  },
+});
+
+
+==================================================
+FILE: .gitignore
+==================================================
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+
+==================================================
+FILE: index.html
+==================================================
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Customs Kit | Customs Declaration Tools</title>
+
+    <link rel="stylesheet" href="./src/styles/style.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/customs-kit/favicon/favicon.ico"
+    />
+  </head>
+  <body>
+    <div id="navbar"></div>
+    <div id="root"></div>
+
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+
+
+==================================================
+FILE: about.html
+==================================================
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Customs Kit | Customs Declaration Tools</title>
+
+    <link rel="stylesheet" href="./src/styles/style.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+<link rel="icon" type="image/x-icon" href="/customs-kit/favicon/favicon.ico" />  </head>
+
+  <body>
+<div id="navbar"></div>
+    <div class="container_03">
+      <h2>СД | Расчет срока ИМ</h2>
+<p>
+  <b>Калькулятор срока подачи импортной статистической декларации</b>
+</p>
+
+<p>
+  Инструмент предназначен для автоматического расчета крайнего срока
+  представления импортной статистической декларации в Республике Беларусь.
+</p>
+
+<p>
+  Калькулятор учитывает установленный законодательством срок подачи декларации
+  — <b>7 рабочих дней</b> с даты возникновения обязанности по декларированию.
+  При расчете автоматически исключаются выходные и официальные праздничные дни
+  Республики Беларусь, а также учитываются переносы рабочих дней,
+  установленные законодательством.
+</p>
+
+<p>
+  В результате пользователь получает точную дату последнего дня, когда
+  статистическая декларация может быть представлена без нарушения установленного
+  срока.
+</p>
+
+<p>
+  <b>Нормативная база:</b>
+  <br>
+  • Постановление Совета Министров Республики Беларусь от 14.09.2020 № 533
+  «О статистическом декларировании товаров».
+</p>
+<p>
+  <b>Актуальность данных:</b>
+  <br>
+  Расчет выполняется с учетом календаря рабочих дней Республики Беларусь на
+  <b>2026 год</b>, включая официальные праздничные дни и установленные переносы
+  рабочих дней.
+</p>
+      <h2>СД | Конвертор валют</h2>
+      <p>
+<p>
+  <b>Конвертер валют для статистического декларирования</b>
+</p>
+
+<p>
+  1) Упрощает пересчет стоимости поставок/отгрузок (в том числе при расчетах
+  в различных валютах) в <b>EUR</b> для определения необходимости подачи
+  статистической декларации. Для расчета используется стоимость товаров, а в поле «Дата» указывается дата заключения договора в соответствии
+  с требованиями законодательства.
+</p>
+
+<p>
+  2) Предназначен для контроля валютных значений при заполнении граф
+  <b>8, 21, 21а</b> статистической декларации. Позволяет выполнить пересчет
+  валюты на дату отгрузки/поставки, в том числе при указании характера сделки
+  <b>«55»</b> для определения суммы в <b>BYN</b> и формирования статистической
+  стоимости в <b>USD</b>.
+</p>
+
+<p>
+  <b>Поддерживаемые валюты ввода:</b> BYN, USD, EUR, RUR.
+  <br>
+  <b>Валюты результата:</b> EUR, USD, BYN.
+</p>
+
+<p>
+  <b>Нормативная база:</b>
+  <br>
+  • Постановление Совета Министров Республики Беларусь от 14.09.2020 № 533
+  «О статистическом декларировании товаров».
+  <br>
+  • Постановление Государственного таможенного комитета Республики Беларусь
+  от 26.01.2012 № 2 «О статистическом декларировании товаров».
+</p>     
+
+</p>
+      <h2>ДТ | Извлечь файлы из XML</h2>
+
+<p>
+  <b>Извлечение электронных документов из XML декларации на товары</b>
+</p>
+
+<p>
+  Инструмент предназначен для извлечения электронных документов, размещенных
+  в информационной системе таможенных органов (ИСТО), из XML-файлов.
+</p>
+
+<p>
+  Приложение автоматически обрабатывает XML-файл декларации на товары,
+  извлекает вложенные документы и формирует архив <b>ZIP</b> с файлами для
+  дальнейшего просмотра и использования.
+</p>
+
+<p>
+  Инструмент позволяет получить информацию о размещенных документах, включая
+  их наименование, размер, реквизиты и дату, а также выполнить загрузку
+  отдельных архивов или сформировать единый архив при обработке нескольких
+  XML-файлов.
+</p>
+
+<p>
+  <b>Основные возможности:</b>
+  <br>
+  • извлечение электронных документов из XML-файлов деклараций на товары;
+  <br>
+  • просмотр информации о вложенных документах;
+  <br>
+  • формирование ZIP-архивов;
+  <br>
+  • пакетная обработка нескольких XML-файлов.
+</p>   
+
+<p>
+  <b>Конфиденциальность:</b>
+  <br>
+  Обработка XML-файлов выполняется локально в браузере пользователя.
+  Загружаемые файлы не передаются на сервер и не сохраняются разработчиком.
+</p>
+
+
+<h2>СД | Контроль данных XML</h2>
+
+<p>
+  <b>Контроль и анализ XML-файлов статистической декларации</b>
+</p>
+
+<p>
+  Инструмент предназначен для автоматического анализа XML-файлов
+  статистических деклараций Республики Беларусь и проверки ключевых
+  показателей перед представлением декларации.
+</p>
+
+<p>
+  Приложение обрабатывает XML-файл непосредственно в браузере пользователя,
+  извлекает основные сведения о товарах и отображает их в удобном структурированном
+  виде, что позволяет быстро выполнить визуальный контроль данных.
+</p>
+
+<p>
+  Инструмент отображает сведения о товарах, весовых показателях, количестве,
+  единицах измерения, стоимости по счету-фактуре, статистической стоимости,
+  валюте расчета, а также итоговые значения по декларации.
+</p>
+
+<p>
+  <b>Основные возможности:</b>
+  <br>
+  • анализ XML-файлов статистических деклараций;
+  <br>
+  • отображение сведений по каждому товару;
+  <br>
+  • контроль веса, количества и единиц измерения;
+  <br>
+  • отображение фактурной и статистической стоимости;
+  <br>
+  • просмотр итоговых данных декларации;
+  <br>
+  • пакетная обработка нескольких XML-файлов.
+</p>
+
+<p>
+  <b>Конфиденциальность:</b>
+  <br>
+  Обработка XML-файлов выполняется локально в браузере пользователя.
+  Загружаемые файлы не передаются на сервер и не сохраняются разработчиком.
+</p>
+
+
+</div>
+
+
+
+    <!-- VITE MODULE -->
+    <script type="module" src="./src/main.js"></script>
+</html>
+
+
+==================================================
+FILE: calc.html
+==================================================
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Customs Kit | Customs Declaration Tools</title>
+
+    <link rel="stylesheet" href="./src/styles/style.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/customs-kit/favicon/favicon.ico"
+    />
+  </head>
+
+  <body>
+    <div id="navbar"></div>
+    <div class="container_01">
+      <h1>Выберите дату поступления:</h1>
+
+      <input type="date" id="dateInput" min="2024-01-01" max="2026-12-31" />
+
+      <div class="button-container">
+        <button onclick="displayDate()">Подтвердить</button>
+      </div>
+
+      <div class="result" id="result"></div>
+    </div>
+
+    <!-- VITE SCRIPT (ТОЛЬКО MODULE) -->
+    <script type="module" src="./src/main.js"></script>
+    <script type="module" src="./src/js/pages/calc.js"></script>
+  </body>
+</html>
+
+
+==================================================
+FILE: currency.html
+==================================================
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Customs Kit | Customs Declaration Tools</title>
+
+    <link rel="stylesheet" href="./src/styles/style.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/customs-kit/favicon/favicon.ico"
+    />
+  </head>
+
+  <body>
+    <div id="navbar"></div>
+    <div class="container_02">
+      <h1>Выберите дату курса валют:</h1>
+
+      <input type="date" id="dateInputConverter" min="2016-07-01" />
+      <input
+        type="number"
+        id="amount"
+        placeholder="Введите сумму"
+        inputmode="numeric"
+      />
+      <select id="currencySelect">
+        <option value="USD">USD (840)</option>
+        <option value="EUR">EUR (978)</option>
+        <option value="RUR">RUR (643)</option>
+        <option value="BYN">BYN (933)</option>
+      </select>
+
+      <div class="button-container">
+        <button id="addButton">Добавить</button>
+        <button id="clearButton">Очистить</button>
+        <button id="doneButton">Рассчитать</button>
+      </div>
+
+      <div id="resultContainer"></div>
+    </div>
+
+    <script type="module" src="./src/main.js"></script>
+    <script type="module" src="./src/js/pages/currency.js"></script>
+  </body>
+</html>
+
+
+==================================================
+FILE: base64-converter.html
+==================================================
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Customs Kit | Customs Declaration Tools</title>
+
+    <link rel="stylesheet" href="./src/styles/style.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/customs-kit/favicon/favicon.ico"
+    />
+  </head>
+
+  <body>
+    <div id="navbar"></div>
+    <div class="container_02">
+      <h1>Выберите XML</h1>
+
+      <p class="desktop-hint">Или перетащите XML-файлы сюда</p>
+
+      <input type="file" id="xmlInput" multiple hidden />
+
+      <div class="button-container">
+        <label for="xmlInput" class="file-button"> 📂 Выбрать XML-файлы </label>
+
+        <button
+          id="parseBtn"
+          class="export-btn"
+          type="button"
+          style="display: none"
+        >
+          📦 Скачать все
+        </button>
+
+        <button
+          id="clearBtn"
+          class="export-btn"
+          type="button"
+          style="display: none"
+        >
+          Очистить
+        </button>
+      </div>
+    </div>
+    <div id="resultXml"></div>
+
+    <!-- MODAL -->
+    <div id="xmlModalOverlay" class="modal-overlay">
+      <div class="modal-window">
+        <div class="modal-header">
+          <div>
+            <div id="modalRegNumber" class="modal-title"></div>
+            <div id="modalSender" class="modal-subtitle"></div>
+            <div id="modalSummary" class="modal-summary"></div>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <table class="files-table">
+            <thead>
+              <tr>
+                <th>№</th>
+                <th>Имя PDF</th>
+                <th>Размер</th>
+                <th>Док</th>
+                <th>Дата</th>
+                <th>Код</th>
+              </tr>
+            </thead>
+            <tbody id="modalFilesBody"></tbody>
+          </table>
+        </div>
+
+        <div class="modal-footer">
+          <button id="modalDownloadBtn">Скачать ZIP</button>
+          <button id="modalCloseFooterBtn">Закрыть</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+
+    <script type="module" src="./src/main.js"></script>
+    <script type="module" src="./src/js/pages/base64.js"></script>
+  </body>
+</html>
+
+
+==================================================
+FILE: stat-analyzer.html
+==================================================
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Customs Kit | SD XML Data Control</title>
+
+    <link rel="stylesheet" href="./src/styles/style.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/customs-kit/favicon/favicon.ico"
+    />
+  </head>
+
+  <body>
+    <!-- NAVBAR -->
+
+    <div id="navbar"></div>
+
+    <!-- UPLOAD AREA -->
+
+    <div class="container_02">
+      <h1>Контроль данных СД XML</h1>
+      <p class="desktop-hint">
+        Выберите или перетащите XML статистической декларации
+      </p>
+      <input type="file" id="xmlInput" accept=".xml" multiple hidden />
+      <div class="button-container">
+        <label for="xmlInput" class="file-button">📂 Выбрать XML-файлы</label>
+        <button
+          id="exportAllExcelBtn"
+          class="export-btn"
+          type="button"
+          style="display: none"
+        >
+          📂Скачать все в общий excel
+        </button>
+        <button
+          id="clearBtn"
+          class="hidden-btn"
+          type="button"
+          style="display: none"
+        >
+          Очистить
+        </button>
+      </div>
+      <div id="progressWrapper" style="display: none">
+        <div id="progressText"></div>
+        <div class="progress-line">
+          <div id="progressBar"></div>
+        </div>
+      </div>
+    </div>
+    <!-- RESULT -->
+
+    <div id="resultXml"></div>
+
+    <!-- MODAL -->
+
+    <div id="xmlModalOverlay" class="modal-overlay">
+      <div class="modal-window">
+        <div class="modal-header">
+          <div>
+            <div id="modalCompany" class="modal-title"></div>
+
+            <div id="modalGoodsCount" class="modal-subtitle"></div>
+
+            <div id="modalSummary" class="modal-summary"></div>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <table class="files-table">
+            <thead id="modalGoodsHead">
+              <tr>
+                <th>№</th>
+                <th>Наименование</th>
+                <th>Нетто/ед.</th>
+                <th>Факт./нетто</th>
+                <th>Стат./нетто</th>
+              </tr>
+            </thead>
+            <tbody id="modalGoodsBody"></tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button id="modalDownloadBtn" type="button">Скачать</button>
+          <button id="modalCloseFooterBtn" type="button">Закрыть</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- APP -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <script type="module" src="./src/main.js"></script>
+    <script type="module" src="./src/js/pages/statAnalyzer.js"></script>
+  </body>
+</html>
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\public\components\navbar.html
+==================================================
+<header class="nav-container">
+  <div class="nav-item nav-item-logo">
+    <a href="index.html">Customs⚙️Kit</a>
+  </div>
+
+  <div class="nav-item nav-item-menu" id="nav-menu">
+    <ul>
+      <li>
+        <a href="calc.html"> СД | Расчет срока ИМ</a>
+      </li>
+
+      <li>
+        <a href="currency.html">СД | Конвертор валют</a>
+      </li>
+
+      <li>
+        <a href="base64-converter.html">ДТ | Извлечь файлы из XML</a>
+      </li>
+
+      <li>
+        <a href="stat-analyzer.html">СД | Контроль данных XML</a>
+      </li>
+
+      <li>
+        <a href="about.html"> О приложении </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="nav-item nav-item-toggle" id="nav-toggle">
+    <div class="toggle-bar toggle-bar-top"></div>
+    <div class="toggle-bar toggle-bar-middle"></div>
+    <div class="toggle-bar toggle-bar-bottom"></div>
+  </div>
+</header>
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\App.jsx
+==================================================
+import { Routes, Route } from 'react-router-dom';
+
+import Navbar from './components/Navbar/Navbar';
+import Container from './components/Layout/Container';
+
+import Home from './pages/Home';
+import About from './pages/About';
+import DeadlineCalculator from './pages/DeadlineCalculator';
+import CurrencyConverter from './pages/CurrencyConverter';
+import XmlExtractor from './pages/XmlExtractor';
+import XmlAnalyzer from './pages/XmlAnalyzer';
+
+function App() {
+  return (
+    <>
+      <Navbar />
+
+      <Container>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/deadline-calculator" element={<DeadlineCalculator />} />
+          <Route path="/currency-converter" element={<CurrencyConverter />} />
+          <Route path="/xml-extractor" element={<XmlExtractor />} />
+          <Route path="/xml-analyzer" element={<XmlAnalyzer />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </Container>
+    </>
+  );
+}
+
+export default App;
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\main.js
+==================================================
+import { loadNavbar } from './js/modules/navbar.js';
+
+import './styles/style.css';
+
+loadNavbar();
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\main.jsx
+==================================================
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+
+import App from './App';
+import './styles/style.css';
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <BrowserRouter basename="/customs-kit">
+    <App />
+  </BrowserRouter>,
+);
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\components\Layout\Container.jsx
+==================================================
+function Container({ children }) {
+  return <main className="page-container">{children}</main>;
+}
+
+export default Container;
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\components\Navbar\Navbar.jsx
+==================================================
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+
+function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const menuItems = [
+    { title: 'СД | Расчет срока ИМ', href: '/deadline-calculator' },
+    { title: 'СД | Конвертор валют', href: '/currency-converter' },
+    { title: 'ДТ | Извлечь файлы из XML', href: '/xml-extractor' },
+    { title: 'СД | Контроль данных XML', href: '/xml-analyzer' },
+    { title: 'О приложении', href: '/about' },
+  ];
+  return (
+    <header className={`nav-container ${isOpen ? 'active' : ''}`}>
+      {' '}
+      <div className="nav-item nav-item-logo">
+        <Link to="/">Customs⚙️Kit</Link>{' '}
+      </div>
+      <div className={`nav-item nav-item-menu ${isOpen ? 'active' : ''}`}>
+        <ul>
+          {menuItems.map((item) => (
+            <li key={item.href}>
+              <Link to={item.href}>{item.title}</Link>{' '}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div
+        className="nav-item nav-item-toggle"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <div className="toggle-bar toggle-bar-top"></div>
+        <div className="toggle-bar toggle-bar-middle"></div>
+        <div className="toggle-bar toggle-bar-bottom"></div>
+      </div>
+    </header>
+  );
+}
+
+export default Navbar;
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\components\UI\Button.jsx
+==================================================
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\components\UI\Card.jsx
+==================================================
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\components\UI\ContentPanel.jsx
+==================================================
+function ContentPanel({ children }) {
+  return <div className="content-panel">{children}</div>;
+}
+
+export default ContentPanel;
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\components\UI\Input.jsx
+==================================================
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\components\UI\Modal.jsx
+==================================================
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\js\api\rate.js
+==================================================
+export const getCurrency = () => {
+  const dateEl = document.getElementById('dateCurrency');
+  const rateEl = document.getElementById('rate');
+
+  if (!dateEl || !rateEl) return;
+
+  const date = dateEl.value;
+
+  if (!date) {
+    alert('Пожалуйста, выберите дату!');
+    return;
+  }
+
+  const formattedDate = new Date(date).toISOString().split('T')[0];
+
+  const url = `https://api.nbrb.by/exrates/rates/431?ondate=${formattedDate}&periodicity=0`;
+
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => {
+      if (data?.Cur_OfficialRate) {
+        rateEl.textContent = `Курс доллара к белорусскому рублю на ${formattedDate}: ${data.Cur_OfficialRate}`;
+      } else {
+        rateEl.textContent = 'Курс не найден';
+      }
+    })
+    .catch((err) => {
+      rateEl.textContent = `Ошибка: ${err}`;
+    });
+};
+
+window.getCurrency = getCurrency;
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\js\core\toggle.js
+==================================================
+export function initToggle() {
+  const navToggle = document.getElementById('nav-toggle');
+
+  const navContainer = document.querySelector('.nav-container');
+
+  const navMenu = document.getElementById('nav-menu');
+
+  if (!navToggle || !navContainer || !navMenu) {
+    return;
+  }
+
+  navToggle.addEventListener('click', () => {
+    navContainer.classList.toggle('active');
+
+    navMenu.classList.toggle('active');
+  });
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      navContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+    } else {
+      navContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+    }
+  });
+}
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\js\modules\navbar.js
+==================================================
+import { initToggle } from '../core/toggle.js';
+export async function loadNavbar() {
+  const navbarContainer = document.getElementById('navbar');
+
+  if (!navbarContainer) return;
+
+  try {
+    const response = await fetch('./components/navbar.html');
+
+    if (!response.ok) {
+      throw new Error('Navbar loading error');
+    }
+
+    const html = await response.text();
+
+    navbarContainer.innerHTML = html;
+
+    initToggle();
+    initNavbar();
+  } catch (error) {
+    console.error('Navbar error:', error);
+  }
+}
+
+function initNavbar() {
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('nav-menu');
+
+  if (!toggle || !menu) return;
+
+  toggle.addEventListener('click', () => {
+    toggle.classList.toggle('active');
+
+    menu.classList.toggle('active');
+  });
+
+  const links = menu.querySelectorAll('a');
+
+  links.forEach((link) => {
+    link.addEventListener('click', () => {
+      menu.classList.remove('active');
+      toggle.classList.remove('active');
+    });
+  });
+}
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\js\pages\base64.js
+==================================================
+let currentPreviewZip = null;
+let currentPreviewRegNumber = null;
+let xmlDataCache = [];
+
+document.addEventListener('DOMContentLoaded', () => {
+  const input = document.getElementById('xmlInput');
+  const parseBtn = document.getElementById('parseBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const resultDiv = document.getElementById('resultXml');
+
+  if (!input || !parseBtn || !resultDiv) return;
+
+  createProgressBar();
+
+  // initial UI state
+  toggleDownloadAllButton();
+
+  // ===== DRAG & DROP =====
+  const dropZone = document.querySelector('.container_02');
+
+  if (dropZone) {
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('drag-over');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('drag-over');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('drag-over');
+
+      if (!e.dataTransfer?.files?.length) return;
+
+      const dt = new DataTransfer();
+      for (const file of e.dataTransfer.files) {
+        dt.items.add(file);
+      }
+
+      input.files = dt.files;
+
+      toggleDownloadAllButton();
+      extractFileFromXmlWithProgress();
+    });
+  }
+
+  input.addEventListener('change', () => {
+    toggleDownloadAllButton();
+    extractFileFromXmlWithProgress();
+  });
+
+  parseBtn.addEventListener('click', downloadAllAsOneZipWithProgress);
+
+  // ===== CLEAR BUTTON =====
+  clearBtn?.addEventListener('click', () => {
+    input.value = '';
+
+    xmlDataCache = [];
+    resultDiv.innerHTML = '';
+
+    hideProgress();
+
+    currentPreviewZip = null;
+    currentPreviewRegNumber = null;
+
+    closePreviewModal();
+
+    toggleDownloadAllButton();
+  });
+
+  // ===== CLICK HANDLER =====
+  resultDiv.addEventListener('click', async (e) => {
+    const itemEl = e.target.closest('[data-index]');
+    if (!itemEl) return;
+
+    const index = itemEl.dataset.index;
+    const item = xmlDataCache[index];
+    if (!item) return;
+
+    const previewBtn = e.target.closest('.icon-preview');
+    const downloadBtn = e.target.closest('.icon-download');
+
+    if (previewBtn) {
+      currentPreviewZip = item.zip;
+      currentPreviewRegNumber = item.regNumber;
+      openPreviewModal(item.packageMeta);
+    }
+
+    if (downloadBtn) {
+      try {
+        const blob = await item.zip.generateAsync({ type: 'blob' });
+        await saveZipCrossBrowser(blob, `${item.regNumber}.zip`);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  });
+});
+
+// ================= PROGRESS =================
+
+function createProgressBar() {
+  const container = document.querySelector('.container_02');
+  if (!container) return;
+
+  const wrapper = document.createElement('div');
+  wrapper.id = 'progressWrapper';
+  wrapper.style.display = 'none';
+  wrapper.style.marginTop = '10px';
+
+  wrapper.innerHTML = `
+    <div id="progressText" style="font-size:14px;margin-bottom:4px;"></div>
+    <div style="height:6px;background:#e0e0e0;border-radius:3px;">
+      <div id="progressBar"
+        style="height:100%;width:0%;background:#4caf50;border-radius:3px;transition:width .2s;">
+      </div>
+    </div>
+  `;
+
+  container.appendChild(wrapper);
+}
+
+function showProgress(text, percent) {
+  const wrapper = document.getElementById('progressWrapper');
+  const bar = document.getElementById('progressBar');
+  const label = document.getElementById('progressText');
+
+  if (!wrapper || !bar || !label) return;
+
+  wrapper.style.display = 'block';
+  label.textContent = text;
+  bar.style.width = `${percent}%`;
+}
+
+function hideProgress() {
+  const el = document.getElementById('progressWrapper');
+  if (el) el.style.display = 'none';
+}
+
+// ================= UI =================
+
+function toggleDownloadAllButton() {
+  const input = document.getElementById('xmlInput');
+  const parseBtn = document.getElementById('parseBtn');
+  const clearBtn = document.getElementById('clearBtn');
+
+  if (!input || !parseBtn || !clearBtn) return;
+
+  const hasFiles = input.files.length > 0;
+
+  parseBtn.style.display = hasFiles ? 'inline-block' : 'none';
+  clearBtn.style.display = hasFiles ? 'inline-block' : 'none';
+}
+
+// ================= XML =================
+
+function sanitizeName(name) {
+  return name.replace(/[\\/:*?"<>|]/g, '-').trim();
+}
+
+async function extractPdfFromXml(xmlText) {
+  const parser = new DOMParser();
+  const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+
+  const regNumber =
+    xmlDoc.getElementsByTagName('RegNumber')[0]?.textContent || 'XML';
+
+  const sender =
+    xmlDoc.getElementsByTagName('Sender')[0]?.getElementsByTagName('Name')[0]
+      ?.textContent || '—';
+
+  const documents = xmlDoc.getElementsByTagName('Document');
+
+  let totalSize = 0;
+  const files = [];
+
+  for (let i = 0; i < documents.length; i++) {
+    const d = documents[i];
+
+    const size = parseFloat(
+      d.getElementsByTagName('Size')[0]?.textContent || 0,
+    );
+    totalSize += size;
+
+    files.push({
+      index: i + 1,
+      name: d.getElementsByTagName('Name')[0]?.textContent || '—',
+      size,
+      docNumber: d.getElementsByTagName('DocNumber')[0]?.textContent || '—',
+      docDate: d.getElementsByTagName('DocDate')[0]?.textContent || '—',
+      docCode: d.getElementsByTagName('DocCode')[0]?.textContent || '—',
+      docType: d.getElementsByTagName('DocType')[0]?.textContent || '—',
+    });
+  }
+
+  const zip = new JSZip();
+  const used = new Set();
+
+  for (const doc of documents) {
+    const zipTag = doc.getElementsByTagName('ZIP')[0];
+    if (!zipTag) continue;
+
+    try {
+      const binary = atob(zipTag.textContent.trim());
+      const bytes = new Uint8Array(binary.length);
+
+      for (let i = 0; i < binary.length; i++) {
+        bytes[i] = binary.charCodeAt(i);
+      }
+
+      const innerZip = await JSZip.loadAsync(bytes);
+
+      for (const f of Object.values(innerZip.files)) {
+        if (f.dir) continue;
+
+        const blob = await f.async('blob');
+        let name = f.name.split('/').pop();
+
+        if (used.has(name)) name = `${Date.now()}_${name}`;
+        used.add(name);
+
+        zip.file(name, blob);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  return {
+    zip,
+    regNumber,
+    sender,
+    packageMeta: {
+      regNumber,
+      sender,
+      totalSize,
+      files,
+    },
+  };
+}
+
+// ================= LOAD =================
+
+async function extractFileFromXmlWithProgress() {
+  const input = document.getElementById('xmlInput');
+  const resultDiv = document.getElementById('resultXml');
+
+  if (!input || !resultDiv) return;
+
+  resultDiv.innerHTML = '';
+  xmlDataCache = [];
+
+  const files = input.files;
+  if (!files.length) return;
+
+  for (let i = 0; i < files.length; i++) {
+    showProgress(
+      `Обработка ${i + 1}/${files.length}`,
+      ((i + 1) / files.length) * 100,
+    );
+
+    const xmlText = await files[i].text();
+    const { zip, regNumber, sender, packageMeta } =
+      await extractPdfFromXml(xmlText);
+
+    const block = document.createElement('div');
+    block.dataset.index = i;
+
+    block.innerHTML = `
+<div class="xml-output">
+  
+  <div class="xml-text">
+    <div class="xml-reg">${regNumber}</div>
+    <div class="xml-sender">${sender}</div>
+  </div>
+
+<div class="xml-actions">
+  <span class="icon-wrapper" title="Скачать">
+    <img src="/customs-kit/download.png" class="icon-btn icon-download">
+  </span>
+
+  <span class="icon-wrapper" title="Просмотр">
+    <img src="/customs-kit/zoom.png" class="icon-btn icon-preview">
+  </span>
+</div>
+</div>    `;
+
+    resultDiv.appendChild(block);
+
+    xmlDataCache[i] = {
+      zip,
+      regNumber,
+      packageMeta,
+    };
+  }
+
+  showProgress('Готово', 100);
+}
+
+// ================= DOWNLOAD ALL =================
+
+async function downloadAllAsOneZipWithProgress() {
+  const input = document.getElementById('xmlInput');
+  if (!input?.files.length) return;
+
+  const master = new JSZip();
+
+  for (let i = 0; i < input.files.length; i++) {
+    showProgress(
+      `Архив ${i + 1}/${input.files.length}`,
+      ((i + 1) / input.files.length) * 100,
+    );
+
+    const xmlText = await input.files[i].text();
+    const { zip, regNumber } = await extractPdfFromXml(xmlText);
+
+    const folder = sanitizeName(regNumber);
+    const content = await zip.generateAsync({ type: 'uint8array' });
+
+    const inner = await JSZip.loadAsync(content);
+
+    for (const [name, file] of Object.entries(inner.files)) {
+      if (!file.dir) {
+        const blob = await file.async('blob');
+        master.file(`${folder}/${name}`, blob);
+      }
+    }
+  }
+
+  showProgress('Скачивание...', 100);
+
+  const blob = await master.generateAsync({ type: 'blob' });
+
+  await saveZipCrossBrowser(
+    blob,
+    `xml_${new Date().toISOString().slice(0, 10)}.zip`,
+  );
+}
+
+// ================= SAVE =================
+
+async function saveZipCrossBrowser(blob, fileName) {
+  if ('showSaveFilePicker' in window) {
+    try {
+      const handle = await window.showSaveFilePicker({
+        suggestedName: fileName,
+        types: [
+          { description: 'ZIP', accept: { 'application/zip': ['.zip'] } },
+        ],
+      });
+
+      const writable = await handle.createWritable();
+      await writable.write(blob);
+      await writable.close();
+      return;
+    } catch (e) {
+      if (e.name === 'AbortError') return;
+      console.error(e);
+      return;
+    }
+  }
+
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = fileName;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+// ================= MODAL =================
+
+function openPreviewModal(meta) {
+  const overlay = document.getElementById('xmlModalOverlay');
+  const body = document.getElementById('modalFilesBody');
+
+  if (!overlay || !body) return;
+
+  document.getElementById('modalRegNumber').textContent = meta.regNumber;
+  document.getElementById('modalSender').textContent = meta.sender;
+
+  document.getElementById('modalSummary').textContent =
+    `Файлов: ${meta.files.length} · Общий размер: ${meta.totalSize.toFixed(2)} MB`;
+
+  body.innerHTML = '';
+
+  meta.files.forEach((f) => {
+    const tr = document.createElement('tr');
+
+    tr.innerHTML = `
+      <td>${f.index}</td>
+      <td>${f.name}</td>
+      <td>${f.size.toFixed(2)} MB</td>
+      <td>${f.docNumber}</td>
+      <td>${f.docDate}</td>
+      <td>${f.docCode} - ${f.docType}</td>
+    `;
+
+    body.appendChild(tr);
+  });
+
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePreviewModal() {
+  const overlay = document.getElementById('xmlModalOverlay');
+  if (!overlay) return;
+
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document
+  .getElementById('modalCloseFooterBtn')
+  ?.addEventListener('click', closePreviewModal);
+
+document
+  .getElementById('modalDownloadBtn')
+  ?.addEventListener('click', async () => {
+    if (!currentPreviewZip) return;
+
+    const blob = await currentPreviewZip.generateAsync({ type: 'blob' });
+    await saveZipCrossBrowser(blob, `${currentPreviewRegNumber}.zip`);
+  });
+
+document.getElementById('xmlModalOverlay')?.addEventListener('click', (e) => {
+  if (e.target.id === 'xmlModalOverlay') closePreviewModal();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closePreviewModal();
+});
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\js\pages\calc.js
+==================================================
+const monthAbbreviations = [
+  'Янв', // Январь
+  'Фев', // Февраль
+  'Мар', // Март
+  'Апр', // Апрель
+  'Май', // Май
+  'Июн', // Июнь
+  'Июл', // Июль
+  'Авг', // Август
+  'Сен', // Сентябрь
+  'Окт', // Октябрь
+  'Ноя', // Ноябрь
+  'Дек', // Декабрь
+];
+
+const weekends = [
+  'Saturday',
+  'Sunday',
+  '2026-01-01',
+  '2026-01-02',
+  '2026-01-07',
+  '2026-04-20',
+  '2026-04-21',
+  '2026-05-01',
+  '2026-07-03',
+  '2026-12-25', // 2026 год скорректировано
+  '2025-12-26',
+  '2025-12-25',
+  '2025-11-07',
+  '2025-07-04',
+  '2025-07-03',
+  '2025-05-09',
+  '2025-05-01',
+  '2025-04-29',
+  '2025-04-28',
+  '2025-01-07',
+  '2025-01-06',
+  '2025-01-02',
+  '2025-01-01',
+  '2024-12-25',
+  '2024-11-08',
+  '2024-11-07',
+  '2024-07-03',
+  '2024-05-14',
+  '2024-05-13',
+  '2024-05-09',
+  '2024-05-01',
+  '2024-03-08',
+  '2024-01-02',
+  '2024-01-01',
+];
+
+const shiftedWorkdays = [
+  '2026-04-25', // Рабочий день за 20.04.2026
+  '2025-12-20', // Рабочий день за 26.12.2025
+  '2025-07-12', // Рабочий день за 04.07.2025
+  '2025-04-26', // Рабочий день за 28.04.2025
+  '2025-01-11', // Рабочий день с 06.01.2025
+  '2024-11-16', // Рабочий день с пятницы 8 ноября
+  '2024-05-18', // Рабочий день с понедельника 13 мая
+];
+
+const isWeekend = (date) => {
+  const dayOfWeek = date.getDay();
+  const isoDate = date.toISOString().split('T')[0];
+
+  return (
+    (dayOfWeek === 0 || dayOfWeek === 6 || weekends.includes(isoDate)) &&
+    !shiftedWorkdays.includes(isoDate)
+  );
+};
+
+const getDeadline = (startDate) => {
+  let date = new Date(startDate);
+  let workdayCount = 0;
+
+  while (workdayCount < 7) {
+    date.setDate(date.getDate() + 1);
+    if (!isWeekend(date)) {
+      workdayCount++;
+    }
+  }
+
+  return date;
+};
+
+// ✔ FIX: защита от null + Vite загрузки
+const displayDate = () => {
+  const dateInputEl = document.getElementById('dateInput');
+  const result = document.getElementById('result');
+
+  if (!dateInputEl || !result) return;
+
+  const dateInput = dateInputEl.value;
+
+  if (dateInput) {
+    const date = new Date(dateInput);
+
+    const monthIndex = date.getMonth();
+    const monthAbbr = monthAbbreviations[monthIndex];
+
+    const deadline = getDeadline(date);
+    const deadlineMonthAbbr = monthAbbreviations[deadline.getMonth()];
+
+    result.innerHTML =
+      `Выбранная дата: ${date.getDate()} ${monthAbbr} ${date.getFullYear()}<br>` +
+      `Срок подачи: ${deadline.getDate()} ${deadlineMonthAbbr} ${deadline.getFullYear()}`;
+  } else {
+    result.textContent = 'Дата не выбрана';
+  }
+};
+
+// ✔ FIX: чтобы работало через onclick в HTML
+window.displayDate = displayDate;
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\js\pages\currency.js
+==================================================
+let results = [];
+
+const amountInput = document.getElementById('amount');
+const currencySelect = document.getElementById('currencySelect');
+const resultContainer = document.getElementById('resultContainer');
+const addButton = document.getElementById('addButton');
+const clearButton = document.getElementById('clearButton');
+const dateInputConverter = document.getElementById('dateInputConverter');
+const doneButton = document.getElementById('doneButton');
+
+const currencyIds = {
+  USD: 431,
+  EUR: 451,
+  RUR: 456,
+  BYN: 1,
+};
+
+const rateCache = {};
+
+async function fetchExchangeRate(currency, date) {
+  if (currency === 'BYN') return 1;
+
+  const key = `${currency}_${date}`;
+  if (rateCache[key]) return rateCache[key];
+
+  const formattedDate = new Date(date).toISOString().split('T')[0];
+  const d = new Date(formattedDate);
+
+  let currencyId = currencyIds[currency];
+
+  if (currency === 'USD') {
+    currencyId = d < new Date('2021-07-09') ? 145 : 431;
+  }
+
+  if (currency === 'EUR') {
+    currencyId =
+      d < new Date('2016-07-01') ? 19 : d < new Date('2021-07-09') ? 292 : 451;
+  }
+
+  if (currency === 'RUR') {
+    currencyId =
+      d < new Date('2016-07-01') ? 190 : d < new Date('2021-07-09') ? 298 : 456;
+  }
+
+  const url = `https://api.nbrb.by/exrates/rates/${currencyId}?ondate=${formattedDate}&periodicity=0`;
+
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return null;
+
+    const data = await res.json();
+
+    if (!data || !data.Cur_OfficialRate) return null;
+
+    const rate =
+      currency === 'RUR' ? data.Cur_OfficialRate / 100 : data.Cur_OfficialRate;
+
+    rateCache[key] = rate;
+    return rate;
+  } catch (err) {
+    console.error('API error:', err);
+    return null;
+  }
+}
+
+if (amountInput && addButton && resultContainer) {
+  amountInput.addEventListener('input', (e) => {
+    let value = e.target.value.replace(',', '.');
+
+    if (!/^\d*(\.\d{0,2})?$/.test(value)) {
+      value = value.slice(0, -1);
+    }
+
+    e.target.value = value;
+  });
+
+  addButton.addEventListener('click', () => {
+    const amount = amountInput.value.trim();
+    const currency = currencySelect.value;
+
+    if (!amount) {
+      alert('Введите сумму');
+      return;
+    }
+
+    results.push({
+      amount: parseFloat(amount),
+      currency,
+    });
+
+    resultContainer.innerHTML = results
+      .map((r) => `${r.amount} ${r.currency}`)
+      .join(' + ');
+
+    amountInput.value = '';
+  });
+
+  clearButton?.addEventListener('click', () => {
+    results = [];
+    resultContainer.innerHTML = '';
+  });
+
+  doneButton?.addEventListener('click', async () => {
+    const date = dateInputConverter.value;
+
+    if (!date) {
+      alert('Выберите дату');
+      return;
+    }
+
+    let totalBYN = 0;
+
+    const eurRate = await fetchExchangeRate('EUR', date);
+    const usdRate = await fetchExchangeRate('USD', date);
+
+    if (!eurRate || !usdRate) {
+      alert('Ошибка получения EUR/USD');
+      return;
+    }
+
+    for (const item of results) {
+      const rate = await fetchExchangeRate(item.currency, date);
+      if (!rate) continue;
+
+      totalBYN += item.amount * rate;
+    }
+
+    const totalEUR = totalBYN / eurRate;
+    const totalUSD = totalBYN / usdRate;
+
+    // 🔥 ВАЖНО: удаляем только старые итоги, но НЕ список
+    const oldTotals = resultContainer.querySelectorAll(
+      '.total-byn, .total-eur, .total-usd',
+    );
+    oldTotals.forEach((el) => el.remove());
+
+    resultContainer.innerHTML += `
+      <p class="total-byn">Итого: ${totalBYN.toFixed(2)} BYN</p>
+      <p class="total-eur">Итого: ${totalEUR.toFixed(2)} EUR</p>
+      <p class="total-usd">Итого: ${totalUSD.toFixed(2)} USD</p>
+    `;
+  });
+}
+
+window.currencyDebug = results;
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\js\pages\statAnalyzer.js
+==================================================
+console.log('SD XML Analyzer started');
+
+let selectedFiles = [];
+let declarations = [];
+let currentDeclaration = null;
+
+const xmlInput = document.getElementById('xmlInput');
+const resultContainer = document.getElementById('resultXml');
+
+const clearBtn = document.getElementById('clearBtn');
+const exportAllExcelBtn = document.getElementById('exportAllExcelBtn');
+const exportZipExcelBtn = document.getElementById('exportZipExcelBtn');
+
+if (xmlInput) {
+  xmlInput.addEventListener('change', async () => {
+    selectedFiles = [...xmlInput.files];
+
+    if (!selectedFiles.length) return;
+
+    if (clearBtn) {
+      clearBtn.style.display = 'flex';
+    }
+
+    if (exportAllExcelBtn) {
+      exportAllExcelBtn.style.display = 'flex';
+    }
+
+    if (exportZipExcelBtn) {
+      exportZipExcelBtn.style.display = 'flex';
+    }
+
+    declarations = [];
+    resultContainer.innerHTML = '';
+
+    for (let i = 0; i < selectedFiles.length; i++) {
+      showProgress(
+        `Обработка ${i + 1}/${selectedFiles.length}`,
+        ((i + 1) / selectedFiles.length) * 100,
+      );
+
+      await new Promise((resolve) => setTimeout(resolve, 50));
+
+      const text = await selectedFiles[i].text();
+
+      await startAnalyze(text);
+    }
+
+    showProgress('Готово', 100);
+  });
+}
+
+if (clearBtn) {
+  clearBtn.onclick = () => {
+    clearPage();
+  };
+}
+function startAnalyze(xmlText) {
+  const parser = new DOMParser();
+  const xml = parser.parseFromString(xmlText, 'application/xml');
+  const parserError = xml.querySelector('parsererror');
+  if (parserError) {
+    alert('XML содержит ошибки');
+    return;
+  }
+  currentDeclaration = {
+    company: '',
+    goods: [],
+  };
+  readDeclaration(xml);
+  declarations.push({ ...currentDeclaration });
+  renderDeclarationCards();
+}
+
+function readDeclaration(xml) {
+  currentDeclaration.company = getValue(xml, 'ShortName');
+  const goods = findAll(xml, 'Stat_CUGoods');
+  goods.forEach((node) => {
+    currentDeclaration.goods.push(readGood(node));
+  });
+}
+
+function readGood(node) {
+  return {
+    number: getValue(node, 'GoodsNumeric'),
+    code: getValue(node, 'GoodsTNVEDCode'),
+    description: getValue(node, 'GoodsDescription'),
+    liabilityDate: getValue(node, 'LiabilityDate'),
+    net: getValue(node, 'NetWeightQuantity'),
+    net2: getValue(node, 'NetWeightQuantity2'),
+    gross: getValue(node, 'GrossWeightQuantity'),
+    quantity: getValue(node, 'GoodsQuantity'),
+    unit: getValue(node, 'MeasureUnitQualifierName'),
+    invoice: getValue(node, 'InvoicedCost'),
+    currency: getValue(node, 'CurrencyCode'),
+    statistic: getValue(node, 'StatisticValueAmount'),
+    dispatchCountry: getValue(node, 'DispatchCountryName'),
+    originCountry: getValue(node, 'OriginCountryName'),
+    destinationCountry: getValue(node, 'DestinationCountryName'),
+    documents: readDocuments(node),
+  };
+}
+
+function readDocuments(node) {
+  const documents = [];
+  const nodes = node.querySelectorAll('Document');
+  nodes.forEach((doc) => {
+    documents.push({
+      code: getValue(doc, 'DocumentCode'),
+      number: getValue(doc, 'DocumentNumber'),
+      date: getValue(doc, 'DocumentDate'),
+    });
+  });
+  return documents;
+}
+
+function renderDeclarationCards() {
+  if (!resultContainer) return;
+  resultContainer.innerHTML = '';
+
+  declarations.forEach((item, index) => {
+    const card = document.createElement('div');
+    card.className = 'xml-output';
+
+    card.innerHTML = `
+<div class="xml-text">
+<div class="xml-reg">
+${escapeHtml(item.company || 'Субъект не найден')}
+</div>
+<div class="xml-sender">
+Количество товаров: ${item.goods.length}
+</div>
+</div>
+<div class="xml-actions">
+<span class="icon-wrapper" title="Скачать Excel">
+<img src="/customs-kit/download.png" class="icon-btn icon-download" data-download="${index}">
+</span>
+<span class="icon-wrapper" title="Просмотр">
+<img src="/customs-kit/zoom.png" class="icon-btn icon-preview" data-open="${index}">
+</span>
+</div>
+`;
+
+    resultContainer.appendChild(card);
+  });
+
+  initCardButtons();
+  initExportButtons();
+}
+
+function initCardButtons() {
+  const downloadButtons = document.querySelectorAll('[data-download]');
+  const openButtons = document.querySelectorAll('[data-open]');
+
+  downloadButtons.forEach((btn) => {
+    btn.onclick = () => {
+      const index = Number(btn.dataset.download);
+      currentDeclaration = declarations[index];
+      downloadExcel(currentDeclaration);
+    };
+  });
+
+  openButtons.forEach((btn) => {
+    btn.onclick = () => {
+      const index = Number(btn.dataset.open);
+      currentDeclaration = declarations[index];
+      openGoodsModal();
+    };
+  });
+}
+
+function initExportButtons() {
+  const exportAllExcelBtn = document.getElementById('exportAllExcelBtn');
+  const exportZipExcelBtn = document.getElementById('exportZipExcelBtn');
+
+  if (exportAllExcelBtn) {
+    exportAllExcelBtn.style.display = declarations.length > 1 ? 'flex' : 'none';
+    exportAllExcelBtn.onclick = () => {
+      downloadAllExcel();
+    };
+  }
+
+  if (exportZipExcelBtn) {
+    exportZipExcelBtn.style.display = declarations.length > 1 ? 'flex' : 'none';
+    exportZipExcelBtn.onclick = () => {
+      downloadSeparateExcelZip();
+    };
+  }
+}
+
+function openGoodsModal() {
+  if (!currentDeclaration) return;
+
+  const overlay = document.getElementById('xmlModalOverlay');
+  const company = document.getElementById('modalCompany');
+  const count = document.getElementById('modalGoodsCount');
+  const summary = document.getElementById('modalSummary');
+
+  if (company) {
+    company.textContent = currentDeclaration.company || '';
+  }
+
+  if (count) {
+    count.textContent = `Товаров: ${currentDeclaration.goods.length}`;
+  }
+
+  if (summary) {
+    summary.textContent = '';
+  }
+
+  renderGoods();
+
+  if (overlay) {
+    overlay.classList.add('active');
+  }
+}
+
+function initModalButtons() {
+  const closeBtn = document.getElementById('modalCloseFooterBtn');
+  const downloadBtn = document.getElementById('modalDownloadBtn');
+  const overlay = document.getElementById('xmlModalOverlay');
+
+  if (closeBtn) {
+    closeBtn.onclick = () => {
+      overlay.classList.remove('active');
+    };
+  }
+
+  if (downloadBtn) {
+    downloadBtn.onclick = () => {
+      downloadExcel(currentDeclaration);
+    };
+  }
+
+  if (overlay) {
+    overlay.onclick = (e) => {
+      if (e.target === overlay) {
+        overlay.classList.remove('active');
+      }
+    };
+  }
+}
+
+initModalButtons();
+
+id = '0x4k9p';
+function downloadExcel(data) {
+  if (!data || !data.goods || !data.goods.length) {
+    return;
+  }
+
+  const rows = data.goods.map((good, index) => {
+    const row = {
+      Организация: data.company || '',
+      '№ товара': good.number || index + 1,
+      'Код ТН ВЭД': good.code || '',
+      Наименование: good.description || '',
+      'Отгрузка (поступление)': formatExcelDate(good.liabilityDate),
+      'Страна отправления': good.dispatchCountry || '',
+      'Страна происхождения': good.originCountry || '',
+      'Страна назначения': good.destinationCountry || '',
+      'Вес нетто': good.net || '',
+      'Вес нетто 2': good.net2 || '',
+      'Вес брутто': good.gross || '',
+      Количество: good.quantity || '',
+      Единица: good.unit || '',
+      Валюта: good.currency || '',
+      'Фактурная стоимость': good.invoice || '',
+      'Статистическая стоимость': good.statistic || '',
+    };
+
+    good.documents.forEach((doc, i) => {
+      const num = i + 1;
+      row[`Код документа ${num}`] = doc.code || '';
+      row[`Номер документа ${num}`] = doc.number || '';
+      row[`Дата документа ${num}`] = formatExcelDate(doc.date);
+    });
+
+    return row;
+  });
+
+  const worksheet = XLSX.utils.json_to_sheet(rows);
+  const workbook = XLSX.utils.book_new();
+
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Stat_CUGoods');
+
+  XLSX.writeFile(workbook, `${data.company || 'SD_XML'}.xlsx`);
+}
+
+function downloadAllExcel() {
+  if (!declarations.length) return;
+
+  const rows = [];
+
+  declarations.forEach((data) => {
+    data.goods.forEach((good, index) => {
+      const row = {
+        Организация: data.company || '',
+        '№ товара': good.number || index + 1,
+        'Код ТН ВЭД': good.code || '',
+        Наименование: good.description || '',
+        'Отгрузка (поступление)': formatExcelDate(good.liabilityDate),
+        'Страна отправления': good.dispatchCountry || '',
+        'Страна происхождения': good.originCountry || '',
+        'Страна назначения': good.destinationCountry || '',
+        'Вес нетто': good.net || '',
+        'Вес нетто 2': good.net2 || '',
+        'Вес брутто': good.gross || '',
+        Количество: good.quantity || '',
+        Единица: good.unit || '',
+        Валюта: good.currency || '',
+        'Фактурная стоимость': good.invoice || '',
+        'Статистическая стоимость': good.statistic || '',
+      };
+
+      good.documents.forEach((doc, i) => {
+        const num = i + 1;
+        row[`Код документа ${num}`] = doc.code || '';
+        row[`Номер документа ${num}`] = doc.number || '';
+        row[`Дата документа ${num}`] = formatExcelDate(doc.date);
+      });
+
+      rows.push(row);
+    });
+  });
+
+  const worksheet = XLSX.utils.json_to_sheet(rows);
+  const workbook = XLSX.utils.book_new();
+
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Stat_CUGoods');
+
+  XLSX.writeFile(workbook, 'Stat_CUGoods_All.xlsx');
+}
+
+function downloadSeparateExcelZip() {
+  if (!declarations.length) return;
+
+  const zip = new JSZip();
+
+  declarations.forEach((data, index) => {
+    const rows = data.goods.map((good, i) => {
+      const row = {
+        Организация: data.company || '',
+        '№ товара': good.number || i + 1,
+        'Код ТН ВЭД': good.code || '',
+        Наименование: good.description || '',
+        'Отгрузка (поступление)': formatExcelDate(good.liabilityDate),
+        'Страна отправления': good.dispatchCountry || '',
+        'Страна происхождения': good.originCountry || '',
+        'Страна назначения': good.destinationCountry || '',
+        'Вес нетто': good.net || '',
+        'Вес нетто 2': good.net2 || '',
+        'Вес брутто': good.gross || '',
+        Количество: good.quantity || '',
+        Единица: good.unit || '',
+        Валюта: good.currency || '',
+        'Фактурная стоимость': good.invoice || '',
+        'Статистическая стоимость': good.statistic || '',
+      };
+
+      good.documents.forEach((doc, num) => {
+        row[`Код документа ${num + 1}`] = doc.code || '';
+        row[`Номер документа ${num + 1}`] = doc.number || '';
+        row[`Дата документа ${num + 1}`] = formatExcelDate(doc.date);
+      });
+
+      return row;
+    });
+
+    const worksheet = XLSX.utils.json_to_sheet(rows);
+    const workbook = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Stat_CUGoods');
+
+    const buffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    const filename = `${data.company || 'SD_XML'}_${index + 1}.xlsx`;
+
+    zip.file(filename, buffer);
+  });
+
+  zip.generateAsync({ type: 'blob' }).then((content) => {
+    const now = new Date();
+    const time =
+      String(now.getHours()).padStart(2, '0') +
+      '-' +
+      String(now.getMinutes()).padStart(2, '0') +
+      '-' +
+      String(now.getSeconds()).padStart(2, '0');
+
+    saveAs(content, `SD_XML_${time}.zip`);
+  });
+}
+
+function formatExcelDate(date) {
+  if (!date) return '';
+
+  if (date.includes('.')) {
+    return date;
+  }
+
+  const parts = date.split('-');
+
+  if (parts.length !== 3) {
+    return date;
+  }
+
+  return `${parts[2]}.${parts[1]}.${parts[0]}`;
+}
+
+function clearPage() {
+  selectedFiles = [];
+  declarations = [];
+  currentDeclaration = null;
+
+  if (xmlInput) {
+    xmlInput.value = '';
+  }
+
+  if (resultContainer) {
+    resultContainer.innerHTML = '';
+  }
+
+  const exportAllExcelBtn = document.getElementById('exportAllExcelBtn');
+  const exportZipExcelBtn = document.getElementById('exportZipExcelBtn');
+
+  if (exportAllExcelBtn) {
+    exportAllExcelBtn.style.display = 'none';
+  }
+
+  if (exportZipExcelBtn) {
+    exportZipExcelBtn.style.display = 'none';
+  }
+
+  if (clearBtn) {
+    clearBtn.style.display = 'none';
+  }
+
+  const progressWrapper = document.getElementById('progressWrapper');
+
+  if (progressWrapper) {
+    progressWrapper.style.display = 'none';
+  }
+}
+
+function showProgress(text, percent) {
+  const wrapper = document.getElementById('progressWrapper');
+  const progressText = document.getElementById('progressText');
+  const progressBar = document.getElementById('progressBar');
+
+  if (wrapper) {
+    wrapper.style.display = 'block';
+  }
+
+  if (progressText) {
+    progressText.textContent = text;
+  }
+
+  if (progressBar) {
+    progressBar.style.width = `${percent}%`;
+  }
+}
+
+function hideProgress() {
+  const wrapper = document.getElementById('progressWrapper');
+
+  if (wrapper) {
+    wrapper.style.display = 'none';
+  }
+}
+
+function getValue(node, tag) {
+  const element = node.querySelector(tag);
+
+  if (!element) {
+    return '';
+  }
+
+  return element.textContent.trim();
+}
+
+function findAll(node, tag) {
+  return Array.from(node.querySelectorAll(tag));
+}
+
+function escapeHtml(value) {
+  if (!value) {
+    return '';
+  }
+
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function format(value) {
+  if (value === undefined || value === null || value === '') {
+    return '';
+  }
+
+  return Number(value).toLocaleString('ru-RU');
+}
+
+function toNumber(value) {
+  if (!value) {
+    return 0;
+  }
+
+  const number = String(value).replace(/\s/g, '').replace(',', '.');
+
+  const result = Number(number);
+
+  return isNaN(result) ? 0 : result;
+}
+
+function renderGoods() {
+  const body = document.getElementById('modalGoodsBody');
+
+  if (!body || !currentDeclaration) {
+    return;
+  }
+
+  const differentNet = currentDeclaration.goods.some(
+    (good) => Number(good.net) !== Number(good.net2),
+  );
+
+  const tableHead = document.querySelector('#modalGoodsHead tr');
+
+  if (tableHead) {
+    tableHead.innerHTML = `
+      <th>№</th>
+      <th>Наименование</th>
+      <th>Нетто/ед.</th>
+      <th>Факт./нетто</th>
+      <th>Стат./нетто</th>
+      ${
+        differentNet
+          ? `
+            <th>Нетто2/ед.</th>
+            <th>Факт./нетто2</th>
+            <th>Стат./нетто2</th>
+          `
+          : ''
+      }
+    `;
+  }
+
+  body.innerHTML = '';
+
+  currentDeclaration.goods.forEach((good, index) => {
+    const net = Number(good.net) || 0;
+    const net2 = Number(good.net2) || 0;
+    const quantity = Number(good.quantity) || 0;
+    const invoice = Number(good.invoice) || 0;
+    const statistic = Number(good.statistic) || 0;
+
+    const netPerUnit = quantity ? (net / quantity).toFixed(2) : '-';
+
+    const invoicePerNet = net ? (invoice / net).toFixed(2) : '-';
+
+    const statisticPerNet = net ? (statistic / net).toFixed(2) : '-';
+
+    const net2Different = net !== net2;
+
+    const net2PerUnit =
+      net2Different && quantity ? (net2 / quantity).toFixed(2) : '—';
+
+    const invoicePerNet2 =
+      net2Different && net2 ? (invoice / net2).toFixed(2) : '—';
+
+    const statisticPerNet2 =
+      net2Different && net2 ? (statistic / net2).toFixed(2) : '—';
+
+    body.innerHTML += `
+      <tr>
+        <td>${escapeHtml(good.number || index + 1)}</td>
+
+        <td>
+          ${escapeHtml(good.description || '')}
+        </td>
+
+        <td>
+          ${netPerUnit}
+          кг/${escapeHtml(good.unit || '')}
+        </td>
+
+        <td>
+          ${invoicePerNet}
+          ${escapeHtml(good.currency || '')}/кг
+        </td>
+
+        <td>
+          ${statisticPerNet}
+          USD/кг
+        </td>
+
+        ${
+          differentNet
+            ? `
+              <td>
+                ${net2PerUnit}
+                кг/${escapeHtml(good.unit || '')}
+              </td>
+
+              <td>
+                ${invoicePerNet2}
+                ${escapeHtml(good.currency || '')}/кг
+              </td>
+
+              <td>
+                ${statisticPerNet2}
+                USD/кг
+              </td>
+            `
+            : ''
+        }
+      </tr>
+    `;
+  });
+}
+const modalCloseFooterBtn = document.getElementById('modalCloseFooterBtn');
+
+if (modalCloseFooterBtn) {
+  modalCloseFooterBtn.onclick = () => {
+    const overlay = document.getElementById('xmlModalOverlay');
+
+    if (overlay) {
+      overlay.classList.remove('active');
+    }
+  };
+}
+
+const modalDownloadBtn = document.getElementById('modalDownloadBtn');
+
+if (modalDownloadBtn) {
+  modalDownloadBtn.onclick = () => {
+    downloadExcel(currentDeclaration);
+  };
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  const exportAllExcelBtn = document.getElementById('exportAllExcelBtn');
+  const exportZipExcelBtn = document.getElementById('exportZipExcelBtn');
+
+  if (exportAllExcelBtn) {
+    exportAllExcelBtn.style.display = 'none';
+  }
+
+  if (exportZipExcelBtn) {
+    exportZipExcelBtn.style.display = 'none';
+  }
+
+  if (clearBtn) {
+    clearBtn.style.display = 'none';
+  }
+});
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\js\pages\statAnalyzer2.js
+==================================================
+// =====================================
+// SD XML Analyzer
+// Customs Kit
+// =====================================
+
+console.log('SD XML Analyzer started');
+
+// -------------------------
+// Elements
+// -------------------------
+
+const xmlInput = document.getElementById('xmlInput');
+const analyzeBtn = null;
+const clearBtn = document.getElementById('clearBtn');
+const resultContainer = document.getElementById('resultXml');
+const dropArea = document.querySelector('.container_02');
+
+// -------------------------
+// Data
+// -------------------------
+
+let selectedFiles = [];
+let declaration = null;
+let declarations = [];
+let progressWrapper = null;
+
+function showProgress(text, value) {
+  const wrapper = document.getElementById('progressWrapper');
+  const textBox = document.getElementById('progressText');
+  const bar = document.getElementById('progressBar');
+  if (!wrapper || !textBox || !bar) return;
+  wrapper.style.display = 'block';
+  textBox.textContent = text;
+  bar.style.width = value + '%';
+}
+function hideProgress() {
+  const wrapper = document.getElementById('progressWrapper');
+  if (wrapper) {
+    setTimeout(() => {
+      wrapper.style.display = 'none';
+    }, 1500);
+  }
+}
+
+// -------------------------
+// File Select
+// -------------------------
+
+xmlInput.addEventListener('change', async () => {
+  selectedFiles = [...xmlInput.files];
+  if (!selectedFiles.length) return;
+  declarations = [];
+  declaration = null;
+  resultContainer.innerHTML = '';
+  for (let i = 0; i < selectedFiles.length; i++) {
+    showProgress(
+      `Обработка ${i + 1}/${selectedFiles.length}`,
+      ((i + 1) / selectedFiles.length) * 100,
+    );
+    const text = await selectedFiles[i].text();
+    startAnalyze(text);
+  }
+  const clearBtn = document.getElementById('clearBtn');
+  if (clearBtn) {
+    clearBtn.style.display = 'flex';
+  }
+  showProgress('Готово', 100);
+  setTimeout(() => {
+    hideProgress();
+  }, 1500);
+});
+
+// -------------------------
+// Drag & Drop
+// -------------------------
+
+['dragenter', 'dragover'].forEach((eventName) => {
+  dropArea.addEventListener(eventName, (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    dropArea.classList.add('drag-over');
+  });
+});
+
+['dragleave', 'drop'].forEach((eventName) => {
+  dropArea.addEventListener(eventName, (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    dropArea.classList.remove('drag-over');
+  });
+});
+
+dropArea.addEventListener('drop', (event) => {
+  const file = event.dataTransfer.files[0];
+  if (!file) return;
+  if (!file.name.toLowerCase().endsWith('.xml')) {
+    alert('Выберите XML файл.');
+    return;
+  }
+  setSelectedFile(file);
+});
+
+// -------------------------
+// Clear
+// -------------------------
+
+clearBtn?.addEventListener('click', clearPage);
+
+// -------------------------
+// Helpers
+// -------------------------
+
+function setSelectedFiles(files) {
+  analyzeBtn.style.display = 'inline-block';
+  clearBtn.style.display = 'inline-block';
+  resultContainer.innerHTML = `
+    <div class="xml-result-card">
+        <h3>
+            Выбрано XML файлов:
+            ${files.length}
+        </h3>
+        <p>
+            Готово к анализу
+        </p>
+    </div>
+    `;
+}
+
+function clearPage() {
+  selectedFiles = [];
+  declarations = [];
+  declaration = null;
+  xmlInput.value = '';
+  const clearBtn = document.getElementById('clearBtn');
+  if (clearBtn) {
+    clearBtn.style.display = 'none';
+  }
+  const exportAllExcelBtn = document.getElementById('exportAllExcelBtn');
+  const exportZipExcelBtn = document.getElementById('exportZipExcelBtn');
+  if (exportAllExcelBtn) {
+    exportAllExcelBtn.style.display = 'none';
+  }
+  if (exportZipExcelBtn) {
+    exportZipExcelBtn.style.display = 'none';
+  }
+  resultContainer.innerHTML = '';
+  const progressWrapper = document.getElementById('progressWrapper');
+  if (progressWrapper) {
+    progressWrapper.style.display = 'none';
+  }
+} // XML PARSER
+// =====================================
+
+function startAnalyze(xmlText) {
+  const parser = new DOMParser();
+  const xml = parser.parseFromString(xmlText, 'application/xml');
+  const parserError = xml.querySelector('parsererror');
+  if (parserError) {
+    alert('XML содержит ошибки.');
+    return;
+  }
+  declaration = {
+    company: '',
+    totalGoods: 0,
+    invoiceTotal: 0,
+    invoiceCurrency: '',
+    statisticTotal: 0,
+    goods: [],
+  };
+  readDeclaration(xml);
+  declarations.push({ ...declaration });
+  renderDeclarationCard();
+}
+
+// =====================================
+
+function readDeclaration(xml) {
+  declaration.company = getValue(xml, 'ShortName');
+  declaration.totalGoods = toNumber(getValue(xml, 'TotalGoodsNumber'));
+  const goods = findAll(xml, 'Stat_CUGoods');
+  goods.forEach((node) => {
+    declaration.goods.push(readGood(node));
+  });
+  calculateTotals();
+}
+// =====================================
+
+function readGood(node) {
+  return {
+    number: getValue(node, 'GoodsNumeric'),
+    code: getValue(node, 'GoodsTNVEDCode'),
+    description: getValue(node, 'GoodsDescription'),
+    liabilityDate: getValue(node, 'LiabilityDate'),
+    invoice: toNumber(getValue(node, 'InvoicedCost')),
+    currency: getValue(node, 'CurrencyCode'),
+    statistic: toNumber(getValue(node, 'StatisticValueAmount')),
+    net: toNumber(getValue(node, 'NetWeightQuantity')),
+    net2: toNumber(getValue(node, 'NetWeightQuantity2')),
+    gross: toNumber(getValue(node, 'GrossWeightQuantity')),
+    quantity: toNumber(getValue(node, 'GoodsQuantity')),
+    unit: getValue(node, 'MeasureUnitQualifierName'),
+    dispatchCountry: getValue(node, 'DispatchCountryName'),
+    originCountry: getValue(node, 'OriginCountryName'),
+    destinationCountry: getValue(node, 'DestinationCountryName'),
+    documents: readDocuments(node),
+  };
+}
+
+function readDocuments(node) {
+  const documents = findAll(node, 'PresentedDocuments');
+  if (!documents.length) {
+    return '';
+  }
+  return documents
+    .map((doc) => {
+      const number = getValue(doc, 'PrDocumentNumber');
+      const date = getValue(doc, 'PrDocumentDate');
+      const code = getValue(doc, 'PresentedDocumentModeCode');
+      return `${number} от ${date} (${code})`;
+    })
+    .join('\n');
+}
+// =====================================
+
+function calculateTotals() {
+  declaration.invoiceTotal = 0;
+  declaration.statisticTotal = 0;
+  declaration.goods.forEach((good) => {
+    declaration.invoiceTotal += good.invoice;
+    declaration.statisticTotal += good.statistic;
+    if (!declaration.invoiceCurrency) {
+      declaration.invoiceCurrency = good.currency;
+    }
+  });
+}
+
+// =====================================
+// XML Helpers
+// =====================================
+
+function findAll(parent, tagName) {
+  return [...parent.getElementsByTagName('*')].filter(
+    (node) => node.localName === tagName,
+  );
+}
+
+// =====================================
+
+function find(parent, tagName) {
+  return [...parent.getElementsByTagName('*')].find(
+    (node) => node.localName === tagName,
+  );
+}
+
+// =====================================
+
+function getValue(parent, tagName) {
+  const node = find(parent, tagName);
+  if (!node) return '';
+  return node.textContent.trim();
+}
+
+// =====================================
+
+function toNumber(value) {
+  if (!value) return 0;
+  value = value.replace(',', '.');
+  const number = Number(value);
+  if (isNaN(number)) return 0;
+  return number;
+}
+
+// =====================================
+
+function format(value) {
+  return Number(value).toLocaleString('ru-RU', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+}
+
+// =====================================
+// DECLARATION CARD
+// =====================================
+
+function renderDeclarationCard() {
+  const resultContainer = document.getElementById('resultXml');
+  if (!resultContainer) return;
+  const exportAllExcelBtn = document.getElementById('exportAllExcelBtn');
+  const exportZipExcelBtn = document.getElementById('exportZipExcelBtn');
+  if (exportAllExcelBtn && exportZipExcelBtn) {
+    if (declarations.length > 1) {
+      exportAllExcelBtn.style.display = 'flex';
+      exportZipExcelBtn.style.display = 'flex';
+    } else {
+      exportAllExcelBtn.style.display = 'none';
+      exportZipExcelBtn.style.display = 'none';
+    }
+  }
+  resultContainer.innerHTML = '';
+  declarations.forEach((item, index) => {
+    const card = document.createElement('div');
+    card.className = 'xml-output';
+    card.innerHTML = `
+<div class="xml-text">
+<div class="xml-reg">
+${escapeHtml(item.company || 'Субъект не найден')}
+</div>
+<div class="xml-sender">
+Количество товаров:
+${item.goods.length}
+<br>
+Фактурная стоимость:
+${format(item.invoiceTotal)}
+${item.invoiceCurrency}
+<br>
+Статистическая стоимость:
+${format(item.statisticTotal)}
+USD
+</div>
+</div>
+<div class="xml-actions">
+<span class="icon-wrapper" title="Скачать Excel">
+<img src="/customs-kit/download.png" class="icon-btn icon-download" data-index="${index}" data-action="download">
+</span>
+<span class="icon-wrapper" title="Просмотр">
+<img src="/customs-kit/zoom.png" class="icon-btn icon-preview" data-index="${index}" data-action="open">
+</span>
+</div>
+`;
+    resultContainer.appendChild(card);
+  });
+  initCardButtons();
+  initExportButtons();
+}
+
+function initExportButtons() {
+  const exportAllExcelBtn = document.getElementById('exportAllExcelBtn');
+  const exportZipExcelBtn = document.getElementById('exportZipExcelBtn');
+
+  if (exportAllExcelBtn) {
+    exportAllExcelBtn.onclick = () => {
+      downloadAllExcel();
+    };
+  }
+
+  if (exportZipExcelBtn) {
+    exportZipExcelBtn.onclick = () => {
+      downloadSeparateExcelZip();
+    };
+  }
+}
+// CARD BUTTONS
+// =====================================
+
+function initCardButtons() {
+  const downloadButtons = document.querySelectorAll('[data-action="download"]');
+  const openButtons = document.querySelectorAll('[data-action="open"]');
+  downloadButtons.forEach((btn) => {
+    btn.onclick = () => {
+      const index = Number(btn.dataset.index);
+      declaration = declarations[index];
+      downloadExcel();
+    };
+  });
+  openButtons.forEach((btn) => {
+    btn.onclick = () => {
+      const index = Number(btn.dataset.index);
+      declaration = declarations[index];
+      openGoodsModal();
+    };
+  });
+}
+
+// =====================================
+// OPEN MODAL
+// =====================================
+
+function openGoodsModal() {
+  if (!declaration) return;
+  const overlay = document.getElementById('xmlModalOverlay');
+  const company = document.getElementById('modalCompany');
+  const count = document.getElementById('modalGoodsCount');
+  const summary = document.getElementById('modalSummary');
+  if (!overlay) return;
+  company.textContent = declaration.company || '';
+  count.textContent = `Товаров: ${declaration.goods.length}`;
+  summary.textContent = `${format(declaration.invoiceTotal)} ${declaration.invoiceCurrency} | ${format(declaration.statisticTotal)} USD`;
+  renderGoods();
+  overlay.classList.add('active');
+}
+
+function initModalButtons() {
+  const closeBtn = document.getElementById('modalCloseFooterBtn');
+  const downloadBtn = document.getElementById('modalDownloadBtn');
+  const overlay = document.getElementById('xmlModalOverlay');
+
+  if (closeBtn) {
+    closeBtn.onclick = () => {
+      overlay.classList.remove('active');
+    };
+  }
+
+  if (downloadBtn) {
+    downloadBtn.onclick = () => {
+      downloadExcel();
+    };
+  }
+
+  if (overlay) {
+    overlay.onclick = (e) => {
+      if (e.target === overlay) {
+        overlay.classList.remove('active');
+      }
+    };
+  }
+}
+
+initModalButtons();
+
+// =====================================
+// CLOSE MODAL
+// =====================================
+
+document
+  .getElementById('modalCloseFooterBtn')
+  ?.addEventListener('click', () => {
+    document.getElementById('xmlModalOverlay').classList.remove('active');
+  });
+
+// =====================================
+// SECURITY
+// =====================================
+
+function escapeHtml(value) {
+  if (!value) return '';
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}
+
+// =====================================
+// GOODS CALCULATIONS
+// =====================================
+
+function calculateGoodsMetrics(good) {
+  return {
+    // Фактурная стоимость / кг нетто
+    invoiceNet: safeDivide(good.invoice, good.net),
+    // Фактурная стоимость / кг нетто без упаковки
+    invoiceNet2: safeDivide(good.invoice, good.net2),
+    // Статистическая стоимость / кг нетто
+    statisticNet: safeDivide(good.statistic, good.net),
+    // Статистическая стоимость / кг нетто без упаковки
+    statisticNet2: safeDivide(good.statistic, good.net2),
+    // кг нетто / единица
+    netPerUnit: safeDivide(good.net, good.quantity),
+    // кг нетто без упаковки / единица
+    net2PerUnit: safeDivide(good.net2, good.quantity),
+  };
+}
+
+// =====================================
+// SAFE DIVISION
+// =====================================
+
+function safeDivide(value1, value2) {
+  if (!value1 || !value2 || value2 === 0) {
+    return null;
+  }
+  return Number(value1 / value2).toFixed(2);
+}
+
+// =====================================
+// METRICS HTML
+// =====================================
+
+function createMetricsHtml(good) {
+  const metrics = calculateGoodsMetrics(good);
+  return `
+<div class="goods-calculations">
+<h4>
+Контрольные расчеты
+</h4>
+<p>
+Фактурная стоимость / кг нетто:
+<strong>
+${metrics.invoiceNet ? metrics.invoiceNet + ' ' + good.currency + '/кг' : '-'}
+</strong>
+</p>
+<p>
+Фактурная стоимость / кг нетто без упаковки:
+<strong>
+${metrics.invoiceNet2 ? metrics.invoiceNet2 + ' ' + good.currency + '/кг' : '-'}
+</strong>
+</p>
+<p>
+Статистическая стоимость / кг нетто:
+<strong>
+${metrics.statisticNet ? metrics.statisticNet + ' USD/кг' : '-'}
+</strong>
+</p>
+<p>
+Статистическая стоимость / кг нетто без упаковки:
+<strong>
+${metrics.statisticNet2 ? metrics.statisticNet2 + ' USD/кг' : '-'}
+</strong>
+</p>
+<p>
+Вес нетто / единица:
+<strong>
+${metrics.netPerUnit ? metrics.netPerUnit + ' кг/' + good.unit : '-'}
+</strong>
+</p>
+<p>
+Вес нетто без упаковки / единица:
+<strong>
+${metrics.net2PerUnit ? metrics.net2PerUnit + ' кг/' + good.unit : '-'}
+</strong>
+</p>
+</div>
+`;
+}
+
+// =====================================
+// GOODS MODAL RENDER
+// =====================================
+
+function renderGoods() {
+  const container = document.getElementById('modalGoodsBody');
+  if (!container) return;
+  const differentNet = declaration.goods.some(
+    (good) => Number(good.net) !== Number(good.net2),
+  );
+  let header = `
+    <tr>
+      <th>№</th>
+      <th>Наименование</th>
+      <th>Нетто / ед.</th>
+      <th>Факт. стоимость / кг</th>
+      <th>Стат. стоимость / кг</th>
+      ${
+        differentNet
+          ? `
+            <th>Нетто 2 / ед.</th>
+
+            <th>Факт. стоимость / кг Н2</th>
+
+            <th>Стат. стоимость / кг Н2</th>
+          `
+          : ''
+      }
+    </tr>
+  `;
+  let rows = declaration.goods
+    .map((good, index) => {
+      const net1 = Number(good.net) || 0;
+      const net2 = Number(good.net2) || 0;
+      const invoice = Number(good.invoice) || 0;
+      const statistic = Number(good.statistic) || 0;
+      const quantity = Number(good.quantity) || 0;
+      const netPerUnit = quantity && net1 ? (net1 / quantity).toFixed(2) : '-';
+      const invoicePerKg = net1 ? (invoice / net1).toFixed(2) : '-';
+      const statisticPerKg = net1 ? (statistic / net1).toFixed(2) : '-';
+      const net2PerUnit = quantity && net2 ? (net2 / quantity).toFixed(2) : '-';
+      const invoicePerKgNet2 = net2 ? (invoice / net2).toFixed(2) : '-';
+      const statisticPerKgNet2 = net2 ? (statistic / net2).toFixed(2) : '-';
+      return `
+        <tr>
+          <td>
+            ${escapeHtml(good.number || index + 1)}
+          </td>
+          <td>
+            ${escapeHtml(good.description || '')}
+          </td>
+          <td>
+            ${netPerUnit}
+            кг/${escapeHtml(good.unit || '')}
+          </td>
+          <td>
+            ${invoicePerKg}
+            ${escapeHtml(good.currency || '')}/кг
+          </td>
+          <td>
+            ${statisticPerKg}
+            USD/кг
+          </td>
+          ${
+            differentNet
+              ? `
+                <td>
+                  ${net2PerUnit}
+                  кг/${escapeHtml(good.unit || '')}
+                </td>
+                <td>
+                  ${invoicePerKgNet2}
+                  ${escapeHtml(good.currency || '')}/кг
+                </td>
+                <td>
+                  ${statisticPerKgNet2}
+                  USD/кг
+                </td>
+              `
+              : ''
+          }
+        </tr>
+      `;
+    })
+    .join('');
+  container.innerHTML = `
+    <table class="files-table">
+      <thead>
+        ${header}
+      </thead>
+      <tbody>
+        ${rows}
+      </tbody>
+    </table>
+  `;
+}
+// =====================================
+// MODAL CONTROL
+// =====================================
+
+function closeModal() {
+  const overlay = document.getElementById('xmlModalOverlay');
+  if (!overlay) return;
+  overlay.classList.remove('active');
+}
+
+// =====================================
+// FOOTER CLOSE BUTTON
+// =====================================
+
+document
+  .getElementById('modalCloseFooterBtn')
+  ?.addEventListener('click', closeModal);
+
+// =====================================
+// CLICK OUTSIDE MODAL
+// =====================================
+
+document
+  .getElementById('xmlModalOverlay')
+  ?.addEventListener('click', (event) => {
+    if (event.target.id === 'xmlModalOverlay') {
+      closeModal();
+    }
+  });
+
+// =====================================
+// ESC CLOSE
+// =====================================
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') {
+    closeModal();
+  }
+});
+
+// =====================================
+// DOWNLOAD PLACEHOLDER
+// =====================================
+
+document.getElementById('downloadBtn')?.addEventListener('click', () => {
+  alert('Экспорт данных будет добавлен позже.');
+});
+
+// =====================================
+// SAFE FORMAT
+// =====================================
+
+function safeText(value) {
+  if (value === undefined || value === null || value === '') {
+    return '-';
+  }
+  return value;
+}
+
+// =====================================
+// CHECK DECLARATION
+// =====================================
+
+function validateDeclaration() {
+  if (!declaration) {
+    alert('XML еще не обработан.');
+    return false;
+  }
+  if (declaration.goods.length === 0) {
+    alert('В XML не найдены товары.');
+    return false;
+  }
+  return true;
+}
+function downloadExcel() {
+  if (!declaration || !declaration.goods.length) {
+    return;
+  }
+  const rows = declaration.goods.map((good, index) => {
+    return {
+      Организация: declaration.company || '',
+      '№ товара': good.number || index + 1,
+      'Код ТН ВЭД': good.code || '',
+      Наименование: good.description || '',
+      'Отгрузка (поступление)': formatExcelDate(good.liabilityDate),
+      'Вес нетто': good.net,
+      'Вес нетто 2': good.net2,
+      'Вес брутто': good.gross,
+      Количество: good.quantity,
+      Единица: good.unit,
+      Валюта: good.currency,
+      'Фактурная стоимость': good.invoice,
+      'Статистическая стоимость USD': good.statistic,
+      'Страна отправления': good.dispatchCountry || '',
+      'Страна происхождения': good.originCountry || '',
+      'Страна назначения': good.destinationCountry || '',
+      Документы: good.documents
+        .map((doc) => `${doc.code} ${doc.number} ${formatExcelDate(doc.date)}`)
+        .join('\n'),
+    };
+  });
+  const worksheet = XLSX.utils.json_to_sheet(rows);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Stat_CUGoods');
+  XLSX.writeFile(workbook, `${declaration.company || 'SD_XML'}_Excel.xlsx`);
+}
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\pages\About.jsx
+==================================================
+function About() {
+  return (
+    <div className="about-panel">
+      <h2>СД | Расчет срока ИМ</h2>
+      <p>
+        <b>Калькулятор срока подачи импортной статистической декларации</b>
+      </p>
+
+      <p>
+        Инструмент предназначен для автоматического расчета крайнего срока
+        представления импортной статистической декларации в Республике Беларусь.
+      </p>
+
+      <p>
+        Калькулятор учитывает установленный законодательством срок подачи
+        декларации — <b>7 рабочих дней</b> с даты возникновения обязанности по
+        декларированию. При расчете автоматически исключаются выходные и
+        официальные праздничные дни Республики Беларусь, а также учитываются
+        переносы рабочих дней, установленные законодательством.
+      </p>
+
+      <p>
+        В результате пользователь получает точную дату последнего дня, когда
+        статистическая декларация может быть представлена без нарушения
+        установленного срока.
+      </p>
+
+      <p>
+        <b>Нормативная база:</b>
+        <br />• Постановление Совета Министров Республики Беларусь от 14.09.2020
+        № 533 «О статистическом декларировании товаров».
+      </p>
+
+      <p>
+        <b>Актуальность данных:</b>
+        <br />
+        Расчет выполняется с учетом календаря рабочих дней Республики Беларусь
+        на
+        <b>2026 год</b>, включая официальные праздничные дни и установленные
+        переносы рабочих дней.
+      </p>
+
+      <h2>СД | Конвертор валют</h2>
+      <p>
+        <b>Конвертер валют для статистического декларирования</b>
+      </p>
+
+      <p>
+        1) Упрощает пересчет стоимости поставок/отгрузок (в том числе при
+        расчетах в различных валютах) в <b>EUR</b> для определения необходимости
+        подачи статистической декларации. Для расчета используется стоимость
+        товаров, а в поле «Дата» указывается дата заключения договора в
+        соответствии с требованиями законодательства.
+      </p>
+
+      <p>
+        2) Предназначен для контроля валютных значений при заполнении граф
+        <b>8, 21, 21а</b> статистической декларации. Позволяет выполнить
+        пересчет валюты на дату отгрузки/поставки, в том числе при указании
+        характера сделки
+        <b>«55»</b> для определения суммы в <b>BYN</b> и формирования
+        статистической стоимости в <b>USD</b>.
+      </p>
+
+      <p>
+        <b>Поддерживаемые валюты ввода:</b> BYN, USD, EUR, RUR.
+        <br />
+        <b>Валюты результата:</b> EUR, USD, BYN.
+      </p>
+
+      <p>
+        <b>Нормативная база:</b>
+        <br />
+        • Постановление Совета Министров Республики Беларусь от 14.09.2020 № 533
+        «О статистическом декларировании товаров».
+        <br />• Постановление Государственного таможенного комитета Республики
+        Беларусь от 26.01.2012 № 2 «О статистическом декларировании товаров».
+      </p>
+
+      <h2>ДТ | Извлечь файлы из XML</h2>
+
+      <p>
+        <b>Извлечение электронных документов из XML декларации на товары</b>
+      </p>
+
+      <p>
+        Инструмент предназначен для извлечения электронных документов,
+        размещенных в информационной системе таможенных органов (ИСТО), из
+        XML-файлов.
+      </p>
+
+      <p>
+        Приложение автоматически обрабатывает XML-файл декларации на товары,
+        извлекает вложенные документы и формирует архив <b>ZIP</b> с файлами для
+        дальнейшего просмотра и использования.
+      </p>
+
+      <p>
+        Инструмент позволяет получить информацию о размещенных документах,
+        включая их наименование, размер, реквизиты и дату, а также выполнить
+        загрузку отдельных архивов или сформировать единый архив при обработке
+        нескольких XML-файлов.
+      </p>
+
+      <p>
+        <b>Основные возможности:</b>
+        <br />
+        • извлечение электронных документов из XML-файлов деклараций на товары;
+        <br />
+        • просмотр информации о вложенных документах;
+        <br />
+        • формирование ZIP-архивов;
+        <br />• пакетная обработка нескольких XML-файлов.
+      </p>
+
+      <p>
+        <b>Конфиденциальность:</b>
+        <br />
+        Обработка XML-файлов выполняется локально в браузере пользователя.
+        Загружаемые файлы не передаются на сервер и не сохраняются
+        разработчиком.
+      </p>
+
+      <h2>СД | Контроль данных XML</h2>
+
+      <p>
+        <b>Контроль и анализ XML-файлов статистической декларации</b>
+      </p>
+
+      <p>
+        Инструмент предназначен для автоматического анализа XML-файлов
+        статистических деклараций Республики Беларусь и проверки ключевых
+        показателей перед представлением декларации.
+      </p>
+
+      <p>
+        Приложение обрабатывает XML-файл непосредственно в браузере
+        пользователя, извлекает основные сведения о товарах и отображает их в
+        удобном структурированном виде, что позволяет быстро выполнить
+        визуальный контроль данных.
+      </p>
+
+      <p>
+        Инструмент отображает сведения о товарах, весовых показателях,
+        количестве, единицах измерения, стоимости по счету-фактуре,
+        статистической стоимости, валюте расчета, а также итоговые значения по
+        декларации.
+      </p>
+
+      <p>
+        <b>Основные возможности:</b>
+        <br />
+        • анализ XML-файлов статистических деклараций;
+        <br />
+        • отображение сведений по каждому товару;
+        <br />
+        • контроль веса, количества и единиц измерения;
+        <br />
+        • отображение фактурной и статистической стоимости;
+        <br />
+        • просмотр итоговых данных декларации;
+        <br />• пакетная обработка нескольких XML-файлов.
+      </p>
+
+      <p>
+        <b>Конфиденциальность:</b>
+        <br />
+        Обработка XML-файлов выполняется локально в браузере пользователя.
+        Загружаемые файлы не передаются на сервер и не сохраняются
+        разработчиком.
+      </p>
+    </div>
+  );
+}
+
+export default About;
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\pages\CurrencyConverter.jsx
+==================================================
+function CurrencyConverter() {
+  return (
+    <div class="content-panel">
+      <h1>Выберите дату курса валют:</h1>
+
+      <input type="date" id="dateInputConverter" min="2016-07-01" />
+      <input
+        type="number"
+        id="amount"
+        placeholder="Введите сумму"
+        inputmode="numeric"
+      />
+      <select id="currencySelect">
+        <option value="USD">USD (840)</option>
+        <option value="EUR">EUR (978)</option>
+        <option value="RUR">RUR (643)</option>
+        <option value="BYN">BYN (933)</option>
+      </select>
+
+      <div class="button-container">
+        <button id="addButton">Добавить</button>
+        <button id="clearButton">Очистить</button>
+        <button id="doneButton">Рассчитать</button>
+      </div>
+
+      <div id="resultContainer"></div>
+    </div>
+  );
+}
+
+export default CurrencyConverter;
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\pages\DeadlineCalculator.jsx
+==================================================
+function DeadlineCalculator() {
+  return (
+    <div className="content-panel">
+      <h1>Выберите дату поступления:</h1>
+
+      <input type="date" id="dateInput" min="2024-01-01" max="2026-12-31" />
+
+      <div class="button-container">
+        <button onclick="displayDate()">Подтвердить</button>
+      </div>
+
+      <div class="result" id="result"></div>
+    </div>
+  );
+}
+
+export default DeadlineCalculator;
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\pages\Home.jsx
+==================================================
+import { Link } from 'react-router-dom';
+
+function Home() {
+  return (
+    <div className="content-panel">
+      <h1>Для начала работы с приложением выберите один из разделов.</h1>
+
+      <p>
+        <Link to="/deadline-calculator">СД | Расчет срока ИМ</Link>
+      </p>
+
+      <p>
+        <Link to="/currency-converter">СД | Конвертор валют</Link>
+      </p>
+
+      <p>
+        <Link to="/xml-extractor">ДТ | Извлечь файлы из XML</Link>
+      </p>
+
+      <p>
+        <Link to="/xml-analyzer">СД | Контроль данных XML</Link>
+      </p>
+    </div>
+  );
+}
+
+export default Home;
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\pages\XmlAnalyzer.jsx
+==================================================
+function XmlAnalyzer() {
+  return (
+    <div className="content-panel">
+      <h1>Контроль данных СД XML</h1>
+      <p className="desktop-hint">
+        Выберите или перетащите XML статистической декларации
+      </p>
+      <input
+        type="file"
+        id="xmlInput"
+        accept=".xml,application/xml"
+        multiple
+        hidden
+      />
+      <div className="button-container">
+        <label htmlFor="xmlInput" className="file-button">
+          📂 Выбрать XML-файлы
+        </label>
+        <button
+          id="exportAllExcelBtn"
+          className="export-btn"
+          type="button"
+          style={{ display: 'none' }}
+        >
+          📂 Скачать все в общий excel
+        </button>
+        <button
+          id="clearBtn"
+          className="hidden-btn"
+          type="button"
+          style={{ display: 'none' }}
+        >
+          Очистить
+        </button>
+      </div>
+      <div id="progressWrapper" style={{ display: 'none' }}>
+        <div id="progressText"></div>
+        <div className="progress-line">
+          <div id="progressBar" style={{ display: 'none' }}></div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default XmlAnalyzer;
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\pages\XmlExtractor.jsx
+==================================================
+function XmlExtractor() {
+  return (
+    <>
+      <div className="content-panel">
+        <h1>Выберите XML</h1>
+
+        <p className="desktop-hint">Или перетащите XML-файлы сюда</p>
+
+        <input type="file" id="xmlInput" multiple hidden />
+
+        <div className="button-container">
+          <label htmlFor="xmlInput" className="file-button">
+            📂 Выбрать XML-файлы
+          </label>
+
+          <button
+            id="parseBtn"
+            className="export-btn"
+            type="button"
+            style={{ display: 'none' }}
+          >
+            📦 Скачать все
+          </button>
+
+          <button
+            id="clearBtn"
+            className="export-btn"
+            type="button"
+            style={{ display: 'none' }}
+          >
+            Очистить
+          </button>
+        </div>
+      </div>
+
+      <div id="resultXml"></div>
+
+      {/* MODAL */}
+      <div id="xmlModalOverlay" className="modal-overlay">
+        <div className="modal-window">
+          <div className="modal-header">
+            <div>
+              <div id="modalRegNumber" className="modal-title"></div>
+              <div id="modalSender" className="modal-subtitle"></div>
+              <div id="modalSummary" className="modal-summary"></div>
+            </div>
+          </div>
+
+          <div className="modal-body">
+            <table className="files-table">
+              <thead>
+                <tr>
+                  <th>№</th>
+                  <th>Имя PDF</th>
+                  <th>Размер</th>
+                  <th>Док</th>
+                  <th>Дата</th>
+                  <th>Код</th>
+                </tr>
+              </thead>
+              <tbody id="modalFilesBody"></tbody>
+            </table>
+          </div>
+
+          <div className="modal-footer">
+            <button id="modalDownloadBtn">Скачать ZIP</button>
+            <button id="modalCloseFooterBtn">Закрыть</button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default XmlExtractor;
+
+
+==================================================
+FILE: C:\Users\MYPC\Desktop\tools\customs-kit\src\styles\style.css
+==================================================
+/* 
+ #262f40 Темно-синий цвет  
+ #f9c127 Ярко-желтый цвет  
+ #889bbf Синий серо-голубой  
+ #bfb488 Бежевый цвет  
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex; /* Включаем Flexbox */
+  justify-content: flex-start; /* Выравниваем содержимое по горизонтали */
+  align-items: center;
+  flex-direction: column; /* Располагаем контейнеры в колонку */
+  min-height: 100vh; /* Используем всю высоту окна браузера */
+  color: #f9c127; /* Ярко-желтый текст */
+  font-family: 'Inter', Arial, sans-serif;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Отключить горизонтальную прокрутку */
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  padding: 0;
+  width: 100%;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.8);
+  transition:
+    background-color 0.4s ease,
+    box-shadow 0.4s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  padding-right: 30px;
+  height: 54px;
+}
+.nav-item-logo a {
+  display: inline-block;
+  color: #f9c127;
+  font-size: 18px;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  padding: 10px 40px;
+  transition: transform 0.3s ease-out;
+  will-change: transform;
+  font-family: Montserrat, sans-serif;
+}
+.nav-item-logo a:hover {
+  transform: scale(1.05);
+}
+.nav-item-menu ul {
+  display: flex;
+  gap: 35px;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item-menu ul li {
+  list-style-type: none;
+}
+.nav-item-menu a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  position: relative;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+.nav-item-menu a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 100%;
+  width: 0%;
+  height: 2px;
+  background: #ff9800;
+  transition:
+    width 0.3s ease,
+    left 0.3s ease;
+  transform: translateX(0%);
+}
+.nav-item-menu a:hover {
+  color: #ff9800;
+}
+
+.nav-item-menu a:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+.nav-item-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 8px;
+}
+.toggle-bar {
+  background-color: #fff;
+  width: 35px;
+  height: 5px;
+  margin-right: 10px;
+  transition: all 0.3s ease;
+}
+.nav-container.active .toggle-bar:nth-child(1) {
+  transform: rotate(45deg) translate(9px, 9px) scale(0.8); /* Вращение, сдвиг и увеличение */
+  border-radius: 10px; /* Добавление скругления для превращения в овал */
+}
+
+.nav-container.active .toggle-bar:nth-child(2) {
+  /* transform: translateX(50px) scale(0); Скрытие с эффектом смещения и уменьшения размера */
+  opacity: 0;
+}
+
+.nav-container.active .toggle-bar:nth-child(3) {
+  transform: rotate(-45deg) translate(9px, -9px) scale(0.8); /* Вращение, сдвиг и увеличение */
+  border-radius: 10px;
+}
+
+h1 {
+  margin: auto;
+}
+.container_01 {
+  margin-top: 100px;
+  background-color: #ffffff;
+  padding: 30px;
+  padding-bottom: 70px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  margin-bottom: 20px;
+  /* height: 150px; */
+}
+.container_01 p {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #262f40;
+  font-weight: 500;
+}
+.container_01 a {
+  color: #ebb01a;
+  text-decoration: none;
+  font-weight: 900;
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.container_01 a:hover {
+  color: #9c3d1e;
+  transform: scale(1.05);
+}
+
+.container_01 a:active {
+  color: #ff5722;
+  transform: scale(0.98);
+}
+
+.container_02 {
+  margin-top: 100px;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.container_01 h1,
+.container_02 h1 {
+  color: #262f40;
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+input[type='date'] {
+  width: 92.8%;
+  padding: 12px;
+  border: 1px solid #889bbf; /* Светло-синий цвет границы */
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.result {
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #262f40;
+}
+
+#amount,
+#currencySelect {
+  display: inline-block;
+  height: 46px;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #889bbf;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+#amount {
+  width: 55%;
+}
+
+#currencySelect {
+  width: 37.8%;
+}
+
+/* Выравниваем кнопки */
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.button-container button {
+  flex: 0 0 auto;
+  min-height: 42px;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: #f9c127;
+  color: #262f40;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.button-container button:hover {
+  background-color: #bfb488;
+}
+
+@media (max-width: 400px) {
+  .button-container button {
+    flex: 1 1 100%;
+  }
+}
+.button-container .file-button,
+.button-container button {
+  min-width: 280px;
+  height: 44px;
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+}
+/* Стили для всех кнопок "Добавить", "Очистить", "Подтвердить", чтобы они стали идентичными */
+button {
+  padding: 3px 15px; /* Используем одинаковые отступы для всех кнопок */
+  font-size: 20px; /* Используем одинаковый размер шрифта */
+  font-weight: 500; /* Используем одинаковый стиль шрифта */
+  background-color: #f9c127; /* Ярко-желтый фон */
+  color: #262f40; /* Темно-синий цвет текста */
+  border-radius: 10px; /* Радиус скругления одинаковый */
+  border: none; /* Убираем рамки */
+  line-height: 1.5; /* Добавляем одинаковое межстрочное расстояние для всех кнопок */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:hover,
+#addButton:hover,
+#clearButton:hover {
+  background-color: #bfb488; /* Бежевый фон при наведении */
+  cursor: pointer;
+}
+#resultContainer {
+  padding-top: 1rem;
+  font-size: 16px;
+  color: #888888;
+}
+
+/* Стили для "Итого в EUR" */
+.total-eur {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #1e3a5f;
+  margin-top: 15px;
+  background-color: #e4edf8;
+  padding: 0.2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Стили для "Итого в BYN, USD, BYN" */
+.total-usd,
+.total-byn {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 15px;
+  padding: 0.2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.total-usd {
+  background-color: rgba(250, 242, 214, 0.5) /* 50% прозрачности */; /* Мягкий желтый с легким оттенком золотистого */
+  color: #2a3d3f; /* Темный оттенок серо-зеленого для контраста */
+}
+
+.total-byn {
+  background-color: rgba(181, 220, 151, 0.5);
+  color: #4a5d3b; /* Темно-зеленый цвет для текста, чтобы создать контраст */
+}
+
+#doneButton {
+  background-color: #262f40;
+  color: #f9c127;
+}
+/* Responsive navigation */
+@media (max-width: 1300px) {
+  .nav-item-menu {
+    display: none;
+  }
+
+  .nav-item-toggle {
+    display: flex;
+  }
+
+  .nav-item-menu ul {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .nav-item-menu a {
+    padding: 10px 0;
+    font-size: 16px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    position: relative;
+  }
+
+  .container_01 {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  /* Slide-in Animation for Mobile Menu */
+  @keyframes slideIn {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  @media (max-width: 768px) {
+    body {
+      /* padding: 0 10px; */
+      justify-content: flex-start;
+    }
+
+    h1 {
+      font-size: 20px; /* Уменьшаем размер заголовков */
+    }
+  }
+
+  .xml-output {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0.8rem;
+    margin: 0.1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: rgba(250, 242, 214, 0.5);
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #2a3d3f;
+  }
+
+  .xml-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+  }
+
+  .xml-reg {
+    font-size: 16px;
+    font-weight: 600;
+    color: #262f40;
+  }
+
+  .xml-sender {
+    font-size: 16px;
+    color: #555;
+  }
+
+  .file-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f9c127;
+    color: #262f40;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: 0.2s;
+  }
+
+  .file-button:hover {
+    background-color: #bfb488;
+  }
+
+  .icon-btn {
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.3s ease-out;
+    will-change: transform;
+  }
+
+  .xml-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .desktop-hint {
+    color: #889bbf;
+    font-size: 15px;
+    margin-bottom: 15px;
+  }
+
+  @media (max-width: 768px) {
+    .desktop-hint {
+      display: none;
+    }
+  }
+
+  .icon-btn:hover {
+    display: inline-block;
+    transform: scale(1.25);
+  }
+  .icon-btn:active {
+    transform: scale(0.95);
+  }
+
+  #parseBtn:hover {
+    background-color: #bfb488;
+  }
+
+  /* ===== Modal styles (XML preview) ===== */
+
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: none; /* 🔥 важно */
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+
+  .modal-overlay.active {
+    display: flex;
+  }
+
+  .modal-window {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 95vw;
+    max-width: 1400px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+    border-bottom: 1px solid rgba(136, 155, 191, 0.3);
+  }
+
+  .modal-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #262f40;
+  }
+
+  .modal-subtitle {
+    font-size: 14px;
+    color: #889bbf;
+    margin-top: 4px;
+  }
+
+  .modal-summary {
+    font-size: 13px;
+    color: #889bbf;
+    margin-top: 6px;
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    font-size: 26px;
+    color: #889bbf;
+    cursor: pointer;
+  }
+
+  .modal-close:hover {
+    color: #262f40;
+  }
+
+  .modal-body {
+    padding: 10px 20px;
+    overflow-y: auto;
+  }
+
+  .files-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .files-table thead th {
+    text-align: left;
+    padding: 8px;
+    font-weight: 600;
+    color: #262f40;
+    border-bottom: 1px solid rgba(136, 155, 191, 0.4);
+  }
+
+  .files-table tbody td {
+    padding: 8px;
+    color: #262f40;
+  }
+
+  .files-table tbody tr:hover {
+    background-color: rgba(250, 242, 214, 0.5);
+  }
+
+  .files-table tbody td:nth-child(1),
+  .files-table tbody td:nth-child(3),
+  .files-table tbody td:nth-child(6) {
+    color: #889bbf;
+  }
+
+  .modal-footer {
+    padding: 20px;
+    border-top: 1px solid rgba(136, 155, 191, 0.3);
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .drag-over {
+    outline: 2px dashed #f9c127;
+    background: rgba(249, 193, 39, 0.08);
+  }
+
+  .actions-row {
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .hidden-btn {
+    display: none;
+  }
+
+  #navbar {
+    width: 100%;
+  }
+
+  /*// react migration //*/
+
+  .page-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .nav-item-menu.active {
+    display: block;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: #333;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  .nav-item-menu.active ul {
+    animation: slideIn 0.5s ease-out;
+  }
+
+  .about-panel {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    margin-top: 100px;
+    padding: 30px;
+    border-radius: 8px;
+    width: 70%;
+    max-width: 90%;
+  }
+  .about-panel p {
+    text-align: justify;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  .about-panel h2 {
+    color: #f9c127;
+    text-align: center;
+  }
+
+  .about-panel {
+    width: 100%;
+  }
+}
+

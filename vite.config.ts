@@ -1,18 +1,7 @@
 import { defineConfig } from 'vite';
-import { resolve } from 'path';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
+  plugins: [react()],
   base: '/customs-kit/',
-  build: {
-    rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'index.html'),
-        calc: resolve(__dirname, 'calc.html'),
-        currency: resolve(__dirname, 'currency.html'),
-        base64: resolve(__dirname, 'base64-converter.html'),
-        about: resolve(__dirname, 'about.html'),
-        statAnalyzer: resolve(__dirname, 'stat-analyzer.html'),
-      },
-    },
-  },
 });
